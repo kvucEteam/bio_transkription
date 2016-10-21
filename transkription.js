@@ -16,16 +16,16 @@
 
 var bioObj = {
         dna : { 
-            A : {name:"Adenin", class:"adenin DNA", src:""},
-            C : {name:"Cytosin",class:"cytosin DNA", src:""},
-            G : {name:"Guanin", class:"guanin DNA", src:""},
-            T : {name:"Thymin", class:"thymin DNA", src:""}
+            A : {name:"Adenin", class:"adenin DNA", src:"a.png"},
+            C : {name:"Cytosin",class:"cytosin DNA", src:"c.png"},
+            G : {name:"Guanin", class:"guanin DNA", src:"g.png"},
+            T : {name:"Thymin", class:"thymin DNA", src:"t.png"}
         },
         mRNA : { 
-            A : {name:"Adenin", class:"adenin mRNA", src:""},
-            C : {name:"Cytosin",class:"cytosin mRNA", src:""},
-            G : {name:"Guanin", class:"guanin mRNA", src:""},
-            U : {name:"Uracil", class:"uracil mRNA", src:""}
+            A : {name:"Adenin", class:"adenin mRNA", src:"am.png"},
+            C : {name:"Cytosin",class:"cytosin mRNA", src:"cm.png"},
+            G : {name:"Guanin", class:"guanin mRNA", src:"gm.png"},
+            U : {name:"Uracil", class:"uracil mRNA", src:"um.png"}
         },
         tRNA : { }
 }
@@ -47,6 +47,228 @@ function basicPosCalc(){
 }
 
 
+function randVec(length){
+    return {x: length*(Math.random()-0.5), y: length*(Math.random()-0.5)};
+}
+
+
+// This is not real brownian motion, but just at little random motion around the spot the neucleotides was initiated.
+function brownianMotion(){
+    var duratation = 1000; 
+    var length = 10; // % 
+
+    // var cObj = Object.create(carouselClass);
+    // cObj.carouselId = 'carouselId';
+
+    //
+    // SEE: http://stackoverflow.com/questions/13774659/random-movement-in-a-fixed-container
+    // 
+
+    // LARGE MOVEMENT:
+    setInterval(function(){ 
+        for (var n in dObj.moveObjArr){   // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x1:null, y1:null, x2:null, y2:null, angel1:null, angel2:null, duratation:null}});
+            console.log('brownianMotion - n: ' + n);
+            if (dObj.moveObjArr[n].brownianMotion){
+                dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
+
+                var vec = randVec(length);
+                dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
+                dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
+                console.log('dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
+
+                $( '#draggable_neucleotide_'+n ).animate({
+                        left: dObj.moveObjArr[n].animationInfo.x,
+                        top: dObj.moveObjArr[n].animationInfo.y
+                    }, dObj.moveObjArr[n].animationInfo.duratation, 
+                    function() {  // Animation complete.
+                        console.log('brownianMotion - ANIMATION COMPLETE');
+                        duratation = duratation*Math.random() + 300;
+                    });
+
+            }
+        }
+    }, duratation);  // <------ Random instad?
+
+}
+
+
+function brownianMotionInit(){
+    window.counter = 0;
+    var duratation = 1000;
+    var length = 6;
+    for (var n in dObj.moveObjArr){
+        
+        // brownianMotion2(n, duratation, length);
+
+        brownianMotion3(n, duratation, length);
+    }
+}
+
+
+function brownianMotion2(n, duratation, length){  // <------ VIRKER!!!
+    
+    if (dObj.moveObjArr[n].brownianMotion){
+
+        console.log('brownianMotion2 - counter: ' + counter);
+        ++counter;
+
+        dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
+
+        var vec = randVec(length);
+        dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
+        dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
+        console.log('brownianMotion2 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
+
+        $( '#draggable_neucleotide_'+n ).animate({
+                left: dObj.moveObjArr[n].animationInfo.x,
+                top: dObj.moveObjArr[n].animationInfo.y
+                // step: function(now) {  // http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
+                //     console.log('brownianMotion2 - STEP');
+                //     $(this).css({
+                //         transform: 'rotate(' + String(now + 180*(Math.random()-0.5)) + 'deg)'
+                //     });
+                // }
+
+                // rotate: String(Math.round(180*(Math.random()-0.5)))+'deg'
+
+            }, dObj.moveObjArr[n].animationInfo.duratation, 
+            function() {  // Animation complete.
+                console.log('brownianMotion2 - ANIMATION COMPLETE');
+                brownianMotion2(n, duratation, length);
+        });
+    }
+}
+
+// dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duratation:null}});
+function brownianMotion3(n, duratation, length){
+
+    if (dObj.moveObjArr[n].brownianMotion){
+
+        console.log('brownianMotion2 - counter: ' + counter);
+        ++counter;
+
+        dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
+
+        var vec = randVec(length);
+        dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
+        dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
+        console.log('brownianMotion2 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
+
+        var randDeg = Math.round(180*(Math.random()-0.5));
+
+        $( '#draggable_neucleotide_'+n ).animate({
+                left: dObj.moveObjArr[n].animationInfo.x,
+                top: dObj.moveObjArr[n].animationInfo.y,
+                // step: function(now) {  // http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
+                //     console.log('brownianMotion2 - STEP');
+                //     $(this).css({
+                //         transform: 'rotate(' + String(now + 180*(Math.random()-0.5)) + 'deg)'
+                //     });
+                // }
+
+                // rotate: String(Math.round(180*(Math.random()-0.5)))+'deg'
+
+                duratation: dObj.moveObjArr[n].animationInfo.duratation
+
+                
+                // step: function(){
+                //     var randDeg = Math.round(180*(Math.random()-0.5));
+                //     $('#draggable_neucleotide_'+n).animate(
+                //         {rotation: 360},
+                //         {
+                //             // duration: 'slow',
+                //             duration: 2*dObj.moveObjArr[n].animationInfo.duratation,
+                //             step: function(now, fx) {
+                //                 $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+                //             }
+                //         }
+                //     );
+                // }
+
+            },
+            function() {  // Animation complete.
+                dObj.moveObjArr[n].animationInfo.angel += 5*((Math.random()-0.5)>0)?1:-1;
+
+                $( this ).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
+                        '-moz-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
+                        '-webkit-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
+                        'transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)' 
+                });
+
+                // $('#draggable_neucleotide_'+n).animate(                // <---- Virker godt knap så godt med animate i x og y
+                //     {rotation: 360},
+                //     {
+                //         // duration: 'slow',
+                //         duration: 2*dObj.moveObjArr[n].animationInfo.duratation,
+                //         step: function(now, fx) {
+                //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+                //         }
+                //     }
+                // );
+                console.log('brownianMotion2 - ANIMATION COMPLETE');
+                brownianMotion3(n, duratation, length);
+            }
+        );
+
+        // setInterval(function(){ 
+        //     var randDeg = Math.round(180*(Math.random()-0.5));
+        //     $('#draggable_neucleotide_'+n).css({                                         
+        //             '-moz-transform': 'rotate('+randDeg+'deg)',
+        //             '-webkit-transform': 'rotate('+randDeg+'deg)',
+        //             'transform': 'rotate('+randDeg+'deg)' 
+        //     });
+        // }, 1000);
+
+        // $('#draggable_neucleotide_'+n).animate(              
+        //     {rotation: 360},
+        //     {
+        //         // duration: 'slow',
+        //         duration: 2*dObj.moveObjArr[n].animationInfo.duratation,
+        //         step: function(now, fx) {
+        //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+        //         }
+        //     }
+        // );
+    }
+}
+
+
+
+
+
+function giveFeedback(valid, callBack){
+    
+
+    var HTML = 'TEST';
+
+    UserMsgBox("body", HTML);
+
+    if (!valid) {  // IMPORTANT: valid = "false" if it is the wrong draggable!
+        console.log('giveFeedback - WRONG');
+       
+    } else {
+        console.log('giveFeedback - CORRECT');
+
+    }
+
+    dObj.userMsgBox_click = false;
+
+    delay();
+
+    function delay(){  
+        
+        console.log('delay - giveFeedback - CALLED'); 
+
+        if ($('#UserMsgBox').length == 0){
+            callBack();
+            return true;
+        }
+
+        setTimeout(delay, 500);
+    }
+}
+
+
 function setEventhandlers(){
 
     $(document).on('mousemove', "#transcriptionContainer", function(event) {
@@ -64,21 +286,52 @@ function setEventhandlers(){
             // ATO found the following if-else construct, that solves the error-sound issue. It is a good (but undocumented) way of triggering "events" on drop / not-drop.
             // SEE:   http://jamesallardice.com/run-a-callback-function-when-a-jquery-ui-draggable-widget-reverts/
             if(valid) {
-                console.log("Dropped in a valid location");
+                console.log("Dropped in a valid location - valid: " + JSON.stringify(valid));
                 // correct_sound();
+                
             }
             else {
-             console.log("Dropped in a invalid location");
+                console.log("Dropped in a invalid location - valid: " + JSON.stringify(valid));
                 // error_sound();
+
+                giveFeedback(valid, function(valid){  // <------ VIRKER IKKE! Funktionen "delay()" i "giveFeedback()" returnere rigtig nok sit callback når userMsgBox er lukket, men console.log() i MARK (#1#) exekveres med det samme! LØSNING: animer at nukleotiderne flyver tilbage på plads manuelt! ()
+                    console.log('valid - giveFeedback');
+                    
+                });
+
+                var id = $(this).prop('id').replace('draggable_neucleotide_','');
+                console.log('card - REVERT - id: ' + id);
+                dObj.moveObjArr[id].brownianMotion = true;
+                $(this).width(dObj.moveObjArr[id].width);    // Re-ajust the width, since JQuery wants to set a new width
+                $(this).height(dObj.moveObjArr[id].height);  // Re-ajust the height, since JQuery wants to set a new height
+                brownianMotion3(id, 1000, 10);
             }
+            console.log('valid - giveFeedback - END');  // MARK (#1#)
             return !valid;
         },
         start: function(event, ui) {
             console.log('card - START');
             // window.topPos = $(this).css('top');
+
+            var baseClass = $(this).attr('class');
+            console.log('start - baseClass: ' + baseClass);
+
+            for (var n in bioObj.mRNA){
+                if (baseClass.indexOf(bioObj.mRNA[n].name.toLowerCase()) !== -1){
+                    dObj.currentDraggableNeucleotide = bioObj.mRNA[n].name.toLowerCase();
+                } 
+            }
+            console.log('start - currentDraggableNeucleotide: ' + dObj.currentDraggableNeucleotide);
         },
         stop: function(event, ui) {
             console.log('card - STOP');
+
+            var id = $(this).prop('id').replace('draggable_neucleotide_','');  
+            console.log('card - DRAG - id: ' + id);
+
+            
+            // dObj.moveObjArr[id].animationInfo.drag = false;
+
 
             // if (dropZoneObj !== null){ // If student answer is correct...
             //     var dropId = $(dropZoneObj).prop('id');
@@ -114,6 +367,24 @@ function setEventhandlers(){
         },
         drag: function(event, ui) {
             console.log('card - DRAG');
+
+            var id = $(this).prop('id').replace('draggable_neucleotide_','');  
+            console.log('card - DRAG - id: ' + id);
+
+
+            // dObj.moveObjArr[id].animationInfo.drag = true;
+
+
+            // var id = $(this).prop('id').replace('draggable_neucleotide_','');  // <------- MARK (#3b#) - IMPORTANT: This is not good - (#3a#) is better. The reason is that if the user 
+            // console.log('card - DRAG - id: ' + id);
+            // dObj.moveObjArr[id].brownianMotion = false;
+            
+            // dObj.moveObjArr[id].animationInfo.angel = 0;
+            // $( this ).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
+            //     '-moz-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            //     '-webkit-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            //     'transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)' 
+            // });
         }
     });
 
@@ -124,6 +395,57 @@ function setEventhandlers(){
             console.log('card - DROP - problem_0');
             // window.dropZoneObj = $(this);
         } 
+    });
+
+
+    // WORKAROUND - PART 1/2 - see: MARK (#3a#) and MARK (#3b#):
+    // If the following action is placed inside the "drag" property of "$('.draggable_neucleotide').draggable()" above, then the following problems occur:
+    //      (1)  If you only perform a mousedown action (but not a drag), then the animate() still makes the neucleotide move.
+    //      (2)  If you only perform a mousedown action (but not a drag), then the size (width and height) of the neucleotide may be altered due to the movement.
+    $(document).on('mousedown', ".draggable_neucleotide", function(event) {
+        console.log('draggable_neucleotide - mousedown - CALLED');
+        var id = $(this).prop('id').replace('draggable_neucleotide_','');   // <------- MARK (#3a#) - IMPORTANT: This is beter than (#3b#)
+        console.log('draggable_neucleotide - mousedown - id: ' + id);
+        dObj.moveObjArr[id].brownianMotion = false;
+        dObj.moveObjArr[id].animationInfo.mousedown = true;
+        console.log('draggable_neucleotide - mousedown - dObj.moveObjArr['+id+'].animationInfo: ' + JSON.stringify(dObj.moveObjArr[id].animationInfo));
+
+        // $( this ).stop( true, true );  // This is an attempt to stop the animation of the neucleotide when it gets mousedown 
+        
+        dObj.moveObjArr[id].animationInfo.angel = 0;
+        $( this ).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
+            '-moz-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            '-webkit-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            'transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)' 
+        });
+    });
+
+    // WORKAROUND - PART 2/2 - see: MARK (#3a#) and MARK (#3b#):
+    // This is set in place so that the neucleotide will return to its origanel state, in the event that you only perform a mousedown action (but not a drag):
+    // $(document).on('mouseup', ".draggable_neucleotide", function(event) {  // transcriptionContainer
+    $(document).on('mouseup', ".draggable_neucleotide", function(event) {
+        console.log('draggable_neucleotide - mouseup - CALLED');
+        var id = $(this).prop('id').replace('draggable_neucleotide_','');   // <------- MARK (#3a#) - IMPORTANT: This is beter than (#3b#)
+        console.log('draggable_neucleotide - mouseup - id: ' + id);
+        dObj.moveObjArr[id].brownianMotion = true;
+        if ((typeof(dObj.moveObjArr[id].animationInfo.mousedown)!=='undefined') && (dObj.moveObjArr[id].animationInfo.mousedown)) {  // If "drag" is defined AND false (false because the user has not dragged the nucleotide (only mousedown) )
+            console.log('draggable_neucleotide - mouseup - RETURN TO STATE');
+            dObj.moveObjArr[id].brownianMotion = true;
+            $(this).width(dObj.moveObjArr[id].width);    // Re-ajust the width, since JQuery wants to set a new width
+            $(this).height(dObj.moveObjArr[id].height);  // Re-ajust the height, since JQuery wants to set a new height
+            brownianMotion3(id, 1000, 10);
+            dObj.moveObjArr[id].animationInfo.mousedown = false;
+        }
+        console.log('draggable_neucleotide - mouseup - dObj.moveObjArr['+id+'].animationInfo: ' + JSON.stringify(dObj.moveObjArr[id].animationInfo));
+    });
+
+
+    $(document).on('click', ".MsgBox_bgr", function(event) {
+        dObj.userMsgBox_click = true;
+    });
+
+    $(document).on('click', "#UserMsgBox", function(event) {
+        dObj.userMsgBox_click = true;
     });
 }
 
@@ -145,7 +467,8 @@ function initTransription(){
     for (var n in dObj.dnaArr){
         // HTML += '<div class="neucleotideWrap"><div class="neucleotide codingStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div></div>';
         // HTML += '<div class="basePairWrap"><div class="neucleotide complementaryStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'">'+complementaryDnaBase(dObj.dnaArr[n])+'</div><div class="neucleotide codingStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div></div>';
-        HTML += '<div class="basePairWrap"><div class="neucleotide templateStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div><div class="neucleotide codingStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'">'+complementaryDnaBase(dObj.dnaArr[n])+'</div></div>';
+        // HTML += '<div class="basePairWrap"><div class="neucleotide templateStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div><div class="neucleotide codingStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'">'+complementaryDnaBase(dObj.dnaArr[n])+'</div></div>'; 
+        HTML += '<div class="basePairWrap"><div class="neucleotide templateStrand '+bioObj.dna[dObj.dnaArr[n]].class+'"><img class="img-responsive" src="img/'+bioObj.dna[dObj.dnaArr[n]].src+'"></div><div class="neucleotide codingStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'"><img class="img-responsive" src="img/'+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].src+'"></div></div>';    
     }
     HTML += '<div class="fadeOut fadeOut_right"></div>';
     // HTML += '<div class="Clear"></div>';
@@ -173,11 +496,15 @@ function addDraggableNeucleotides(){
     var HTML = '';
     for (var n in bioObj.mRNA){
         console.log('addDraggableNeucleotides - n: ' + n);
-        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
+        // HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'"><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
         ++count;
     }
     $('#transcriptionContainer').append(HTML);
 
+    console.log('addDraggableNeucleotides - count: ' + count);
+
+    dObj.moveObjArr = [];
     for (var i = 0; i < count; i++) {
         var x = Math.round(Math.random()*90 + 5);
         var y = Math.round(Math.random()*15);
@@ -187,7 +514,24 @@ function addDraggableNeucleotides(){
             y = y + 70;
             $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
         }
+    
+        // var width = $('#draggable_neucleotide_'+i).width();
+        // var height = $('#draggable_neucleotide_'+i).height();
+
+        // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, angle:0, brownianMotion:true});
+        dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, width:'5%', height:'10%', brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duratation:null}});
+
+
+        dObj.moveObjArr[i].animationInfo.angel += 45*(Math.random()-0.5);
+
+        $('#draggable_neucleotide_'+i).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
+                '-moz-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+                '-webkit-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+                'transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)' 
+        });
     };
+
+    console.log('addDraggableNeucleotides - dObj.moveObjArr: ' + JSON.stringify(dObj.moveObjArr));
 }
 
 
@@ -226,6 +570,9 @@ $(document).ready(function() {
     setEventhandlers();
 
     ajustScreenHight();
+
+    // brownianMotion();
+    brownianMotionInit();
     
 });
 
