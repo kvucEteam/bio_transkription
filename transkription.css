@@ -76,21 +76,29 @@
 	position: absolute; 
 	z-index: 10;
 }
-.fadeOut_left{
+.fadeOut_left{   /*  #454E4F == 069078079,  #454C4C == 069076076  */
 	background-color: #fff5cc;
 	background: #FFF; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1)); /*Safari 5.1-6*/
-	background: -o-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1)); /*Opera 11.1-12*/
-	background: -moz-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1)); /*Fx 3.6-15*/
-	background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1)); /*Standard*/
+	/*background: -webkit-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Safari 5.1-6*/
+	/*background: -o-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Opera 11.1-12*/
+	/*background: -moz-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Fx 3.6-15*/
+	/*background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,1));*/ /*Standard*/
+	background: -webkit-linear-gradient(right,rgba(69,76,76,0),rgba(69,76,76,1)); /*Safari 5.1-6*/
+	background: -o-linear-gradient(left,rgba69,76,76,0),rgba(69,76,76,1)); /*Opera 11.1-12*/
+	background: -moz-linear-gradient(left,rgba(69,76,76,0),rgba(69,76,76,1)); /*Fx 3.6-15*/
+	background: linear-gradient(to left, rgba(69,76,76,0), rgba(69,76,76,1)); /*Standard*/
 }
 .fadeOut_right{ 
 	left: 95%;
 	background: #FFF; /* For browsers that do not support gradients */
-	background: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1)); /*Safari 5.1-6*/
-	background: -o-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1)); /*Opera 11.1-12*/
-	background: -moz-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1)); /*Fx 3.6-15*/
-	background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1)); /*Standard*/
+	/*background: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Safari 5.1-6*/
+	/*background: -o-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Opera 11.1-12*/
+	/*background: -moz-linear-gradient(right,rgba(255,255,255,0),rgba(255,255,255,1));*/ /*Fx 3.6-15*/
+	/*background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));*/ /*Standard*/
+	background: -webkit-linear-gradient(left,rgba(69,76,76,0),rgba(69,76,76,1)); /*Safari 5.1-6*/
+	background: -o-linear-gradient(right,rgba(69,76,76,0),rgba(69,76,76,1)); /*Opera 11.1-12*/
+	background: -moz-linear-gradient(right,rgba(69,76,76,0),rgba(69,76,76,1)); /*Fx 3.6-15*/
+	background: linear-gradient(to right, rgba(69,76,76,0), rgba(69,76,76,1)); /*Standard*/
 }
 .draggable_neucleotide{
 	width: 5%;
