@@ -14,7 +14,7 @@
 
 // var dna = 'ACTGGACTACTGGACTGACT';  // codingStrand
 
-// background-color: #454E4F
+// background-color: #454E4F == 069078079,  #454C4C == 069076076
 
 // TYPES OG MUTATIONS:
 // http://evolution.berkeley.edu/evolibrary/article/mutations_03 
@@ -230,50 +230,13 @@ function randVec(length){
 }
 
 
-// This is not real brownian motion, but just at little random motion around the spot the neucleotides was initiated.
-function brownianMotion(){
-    var duratation = 1000; 
-    var length = 10; // % 
-
-    // var cObj = Object.create(carouselClass);
-    // cObj.carouselId = 'carouselId';
-
-    //
-    // SEE: http://stackoverflow.com/questions/13774659/random-movement-in-a-fixed-container
-    // 
-
-    // LARGE MOVEMENT:
-    setInterval(function(){ 
-        for (var n in dObj.moveObjArr){   // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x1:null, y1:null, x2:null, y2:null, angel1:null, angel2:null, duratation:null}});
-            console.log('brownianMotion - n: ' + n);
-            if (dObj.moveObjArr[n].brownianMotion){
-                dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
-
-                var vec = randVec(length);
-                dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
-                dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
-                console.log('dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
-
-                $( '#draggable_neucleotide_'+n ).animate({
-                        left: dObj.moveObjArr[n].animationInfo.x,
-                        top: dObj.moveObjArr[n].animationInfo.y
-                    }, dObj.moveObjArr[n].animationInfo.duratation, 
-                    function() {  // Animation complete.
-                        console.log('brownianMotion - ANIMATION COMPLETE');
-                        duratation = duratation*Math.random() + 300;
-                    });
-
-            }
-        }
-    }, duratation);  // <------ Random instad?
-
-}
 
 
 function brownianMotionInit(){
     window.counter = 0;
     var duratation = 1000;
-    var length = 6;
+    // var length = 6;
+    var length = 1;
     for (var n in dObj.moveObjArr){
         
         // brownianMotion2(n, duratation, length);
@@ -283,46 +246,12 @@ function brownianMotionInit(){
 }
 
 
-function brownianMotion2(n, duratation, length){  // <------ VIRKER!!!
-    
-    if (dObj.moveObjArr[n].brownianMotion){
-
-        console.log('brownianMotion2 - counter: ' + counter);
-        ++counter;
-
-        dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
-
-        var vec = randVec(length);
-        dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
-        dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
-        console.log('brownianMotion2 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
-
-        $( '#draggable_neucleotide_'+n ).animate({
-                left: dObj.moveObjArr[n].animationInfo.x,
-                top: dObj.moveObjArr[n].animationInfo.y
-                // step: function(now) {  // http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
-                //     console.log('brownianMotion2 - STEP');
-                //     $(this).css({
-                //         transform: 'rotate(' + String(now + 180*(Math.random()-0.5)) + 'deg)'
-                //     });
-                // }
-
-                // rotate: String(Math.round(180*(Math.random()-0.5)))+'deg'
-
-            }, dObj.moveObjArr[n].animationInfo.duratation, 
-            function() {  // Animation complete.
-                console.log('brownianMotion2 - ANIMATION COMPLETE');
-                brownianMotion2(n, duratation, length);
-        });
-    }
-}
-
 // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duratation:null}});
 function brownianMotion3(n, duratation, length){
 
     if (dObj.moveObjArr[n].brownianMotion){
 
-        console.log('brownianMotion2 - counter: ' + counter);
+        console.log('brownianMotion3 - counter: ' + counter);
         ++counter;
 
         dObj.moveObjArr[n].animationInfo.duratation = duratation*Math.random() + 300;  // <------ Random instad?
@@ -330,7 +259,7 @@ function brownianMotion3(n, duratation, length){
         var vec = randVec(length);
         dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
         dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
-        console.log('brownianMotion2 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
+        console.log('brownianMotion3 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
 
         var randDeg = Math.round(180*(Math.random()-0.5));
 
@@ -383,7 +312,7 @@ function brownianMotion3(n, duratation, length){
                 //         }
                 //     }
                 // );
-                console.log('brownianMotion2 - ANIMATION COMPLETE');
+                console.log('brownianMotion3 - ANIMATION COMPLETE');
                 brownianMotion3(n, duratation, length);
             }
         );

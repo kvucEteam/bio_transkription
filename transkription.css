@@ -61,14 +61,17 @@
 }
 #dropZone{
 	width: 5%;
-	height: 10%;
-	border: 1px solid #F00;
+	/*height: 10%;*/
+	height: 13%;
+	border: 1px dashed #454C4C;
 	position: absolute; /* This absolute position is possible because of the relative position of its parent (#transcriptionContainer) */
-	top: 50%;
+	/*top: 50%;*/
+	top: 47%;
 	left: 50%;   /* <--- IMPORTANT - THIS VALUE IS SET INLINE BY JQuery in "correctmRnaNucleotide()"! NOTE: 50% = 5%*10 */
 	z-index: 10;
-	background-color: #fff5cc;
+	background-color: #f8f8f6;
 }
+
 .fadeOut{
 	display: inline-block;
 	width: 5%;
