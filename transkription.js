@@ -14,12 +14,23 @@
 
 // var dna = 'ACTGGACTACTGGACTGACT';  // codingStrand
 
+// background-color: #454E4F
+
+// TYPES OG MUTATIONS:
+// http://evolution.berkeley.edu/evolibrary/article/mutations_03 
+
 var bioObj = {
+        // dna : { 
+        //     A : {name:"Adenin", class:"adenin DNA", src:"a.png"},
+        //     C : {name:"Cytosin",class:"cytosin DNA", src:"c.png"},
+        //     G : {name:"Guanin", class:"guanin DNA", src:"g.png"},
+        //     T : {name:"Thymin", class:"thymin DNA", src:"t.png"}
+        // },
         dna : { 
-            A : {name:"Adenin", class:"adenin DNA", src:"a.png"},
-            C : {name:"Cytosin",class:"cytosin DNA", src:"c.png"},
-            G : {name:"Guanin", class:"guanin DNA", src:"g.png"},
-            T : {name:"Thymin", class:"thymin DNA", src:"t.png"}
+            A : {name:"Adenin", class:"adenin DNA", src: {codingStrand: 'ao.png', templateStrand: 'an.png'} },
+            C : {name:"Cytosin",class:"cytosin DNA", src: {codingStrand: 'co.png', templateStrand: 'cn.png'} },
+            G : {name:"Guanin", class:"guanin DNA", src: {codingStrand: 'go.png', templateStrand: 'gn.png'} },
+            T : {name:"Thymin", class:"thymin DNA", src: {codingStrand: 'to.png', templateStrand: 'tn.png'} }
         },
         mRNA : { 
             A : {name:"Adenin", class:"adenin mRNA", src:"am.png"},
@@ -27,12 +38,179 @@ var bioObj = {
             G : {name:"Guanin", class:"guanin mRNA", src:"gm.png"},
             U : {name:"Uracil", class:"uracil mRNA", src:"um.png"}
         },
-        tRNA : { }
+        tRNA : { 
+            U : {
+                U: {
+                    U: {name: "Phenylalanin", sym: "Phe", symShort: "F"},
+                    C: {name: "Phenylalanin", sym: "Phe", symShort: "F"},
+                    A: {name: "Leucin", sym: "Leu", symShort: "L"},
+                    G: {name: "Leucin", sym: "Leu", symShort: "L"}
+                },
+                C: {
+                    U: {name: "Serin", sym: "Ser", symShort: "S"},
+                    C: {name: "Serin", sym: "Ser", symShort: "S"},
+                    A: {name: "Serin", sym: "Ser", symShort: "S"},
+                    G: {name: "Serin", sym: "Ser", symShort: "S"}
+                },
+                A: {
+                    U: {name: "Tyrosin", sym: "Tyr", symShort: "Y"},
+                    C: {name: "Tyrosin", sym: "Tyr", symShort: "Y"},
+                    A: {name: "", codonAction: "STOP"},
+                    G: {name: "", codonAction: "STOP"}
+                },
+                G: {
+                    U: {name: "Cystein", sym: "Cys", symShort: "C"},
+                    C: {name: "Cystein", sym: "Cys", symShort: "C"},
+                    A: {name: "", codonAction: "STOP"},
+                    G: {name: "Tryptophan", sym: "Trp", symShort: "W"}
+                }
+            },
+            C : {
+                U: {
+                    U: {name: "Leucin", sym: "Leu", symShort: "L"},
+                    C: {name: "Leucin", sym: "Leu", symShort: "L"},
+                    A: {name: "Leucin", sym: "Leu", symShort: "L"},
+                    G: {name: "Leucin", sym: "Leu", symShort: "L"}
+                },
+                C: {
+                    U: {name: "Prolin", sym: "Pro", symShort: "P"},
+                    C: {name: "Prolin", sym: "Pro", symShort: "P"},
+                    A: {name: "Prolin", sym: "Pro", symShort: "P"},
+                    G: {name: "Prolin", sym: "Pro", symShort: "P"}
+                },
+                A: {
+                    U: {name: "Histidin", sym: "His", symShort: "H"},
+                    C: {name: "Histidin", sym: "His", symShort: "H"},
+                    A: {name: "Glutamin", sym: "Gln", symShort: "Q"},
+                    G: {name: "Glutamin", sym: "Gln", symShort: "Q"}
+                },
+                G: {
+                    U: {name: "Arginin", sym: "Arg", symShort: "R"},
+                    C: {name: "Arginin", sym: "Arg", symShort: "R"},
+                    A: {name: "Arginin", sym: "Arg", symShort: "R"},
+                    G: {name: "Arginin", sym: "Arg", symShort: "R"}
+                }
+            },
+            A : {
+                U: {
+                    U: {name: "Isoleucin", sym: "Ile", symShort: "I"},
+                    C: {name: "Isoleucin", sym: "Ile", symShort: "I"},
+                    A: {name: "Isoleucin", sym: "Ile", symShort: "I"},
+                    G: {name: "Methionin", sym: "Met", symShort: "M", codonAction: "START"}
+                },
+                C: {
+                    U: {name: "Threonin", sym: "Thr", symShort: "T"},
+                    C: {name: "Threonin", sym: "Thr", symShort: "T"},
+                    A: {name: "Threonin", sym: "Thr", symShort: "T"},
+                    G: {name: "Threonin", sym: "Thr", symShort: "T"}
+                },
+                A: {
+                    U: {name: "Aspargin", sym: "Asn", symShort: "N"},
+                    C: {name: "Aspargin", sym: "Asn", symShort: "N"},
+                    A: {name: "Lysin", sym: "Lys", symShort: "K"},
+                    G: {name: "Lysin", sym: "Lys", symShort: "K"}
+                },
+                G: {
+                    U: {name: "Serin", sym: "Ser", symShort: "S"},
+                    C: {name: "Serin", sym: "Ser", symShort: "S"},
+                    A: {name: "Arginin", sym: "Arg", symShort: "R"},
+                    G: {name: "Arginin", sym: "Arg", symShort: "R"}
+                }
+            },
+            G : {
+                U: {
+                    U: {name: "Valin", sym: "Val", symShort: "V"},
+                    C: {name: "Valin", sym: "Val", symShort: "V"},
+                    A: {name: "Valin", sym: "Val", symShort: "V"},
+                    G: {name: "Valin", sym: "Val", symShort: "V"}
+                },
+                C: {
+                    U: {name: "Alanin", sym: "Ala", symShort: "A"},
+                    C: {name: "Alanin", sym: "Ala", symShort: "A"},
+                    A: {name: "Alanin", sym: "Ala", symShort: "A"},
+                    G: {name: "Alanin", sym: "Ala", symShort: "A"}
+                },
+                A: {
+                    U: {name: "Aspargin syre", sym: "Asp", symShort: "D"},
+                    C: {name: "Aspargin syre", sym: "Asp", symShort: "D"},
+                    A: {name: "Glutamin syre", sym: "Glu", symShort: "E"},
+                    G: {name: "Glutamin syre", sym: "Glu", symShort: "E"}
+                },
+                G: {
+                    U: {name: "Glysin", sym: "Gly", symShort: "G"},
+                    C: {name: "Glysin", sym: "Gly", symShort: "G"},
+                    A: {name: "Glysin", sym: "Gly", symShort: "G"},
+                    G: {name: "Glysin", sym: "Gly", symShort: "G"}
+                }
+            } 
+        }
 }
 
 var dObj = {
 
 };
+
+
+function mRNAtoProtein(mRNA){
+    var proteinObj = {
+        name: '',
+        sym: '',
+        symShort: ''
+    }
+
+    var mRNA = mRNA.split('');
+    
+    // for (var l in mRNA){
+    //     for (var m in mRNA[l]){
+    //         for (var n in mRNA[l][m]){
+    //             if (typeof(mRNA[l][m][n].codonAction)==='undefined'){
+    //                 proteinObj.name += mRNA[l][m][n].name+' ';
+    //                 proteinObj.sym += mRNA[l][m][n].sym+' ';
+    //                 proteinObj.symShort += mRNA[l][m][n].symShort+' ';
+    //             }
+    //         }
+    //     }
+    // }
+
+    var codonArr = [];
+
+    var numOfCodons = Math.floor(mRNA.length/3);
+    var count = 0;
+    for (var i = 0; i < numOfCodons; i++) {
+        var condon = [];
+        for (var k = 0; k < 3; k++) {
+            condon.push(mRNA[count]);
+            ++count;
+        }
+        codonArr.push(condon);
+    };
+    console.log('mRNAtoProtein - codonArr: ' + JSON.stringify(codonArr));
+
+    for (var n in codonArr){
+        var ca = codonArr[n];
+        if (typeof(bioObj.tRNA[ca[0]][ca[1]][ca[2]])!=='undefined'){
+            if (typeof(bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction)==='undefined'){
+                proteinObj.name += bioObj.tRNA[ca[0]][ca[1]][ca[2]].name+' ';
+                proteinObj.sym += bioObj.tRNA[ca[0]][ca[1]][ca[2]].sym+' ';
+                proteinObj.symShort += bioObj.tRNA[ca[0]][ca[1]][ca[2]].symShort+' ';
+            } else {
+                if ((bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction.toLowerCase() == 'stop') && (codonArr.length >= n)){
+                    console.log('mRNAtoProtein - ERROR - Codon nr '+n+' er et "' +bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction+ '" codon. Proteinet bliver ikke derfor ikke længere end '+n+' codons!');
+                } 
+                if (bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction.toLowerCase() == 'start'){
+                    console.log('mRNAtoProtein - ERROR - Codon nr '+n+' er et "' +bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction+ '" codon. Proteinet bliver ikke derfor ikke det du regner med!');
+                }
+            }
+        } else {
+            console.log('mRNAtoProtein - ERROR - Codon nr '+n+', som er : "' + ca[0]+ca[1]+ca[2]+ '" eksistere ikke!');
+        }
+    }
+    console.log('mRNAtoProtein - proteinObj: ' + JSON.stringify(proteinObj));
+
+    return proteinObj;
+}
+console.log('mRNAtoProtein: ' + JSON.stringify(mRNAtoProtein('GUAGUAUGAGUA')));  // Nr 3 codon = Stop-codon 
+console.log('mRNAtoProtein: ' + JSON.stringify(mRNAtoProtein('GUAGUAAUGGUA')));  // Nr 3 codon = Stop-codon
 
 
 function basicPosCalc(){
@@ -468,7 +646,7 @@ function initTransription(){
         // HTML += '<div class="neucleotideWrap"><div class="neucleotide codingStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div></div>';
         // HTML += '<div class="basePairWrap"><div class="neucleotide complementaryStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'">'+complementaryDnaBase(dObj.dnaArr[n])+'</div><div class="neucleotide codingStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div></div>';
         // HTML += '<div class="basePairWrap"><div class="neucleotide templateStrand '+bioObj.dna[dObj.dnaArr[n]].class+'">'+dObj.dnaArr[n]+'</div><div class="neucleotide codingStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'">'+complementaryDnaBase(dObj.dnaArr[n])+'</div></div>'; 
-        HTML += '<div class="basePairWrap"><div class="neucleotide templateStrand '+bioObj.dna[dObj.dnaArr[n]].class+'"><img class="img-responsive" src="img/'+bioObj.dna[dObj.dnaArr[n]].src+'"></div><div class="neucleotide codingStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'"><img class="img-responsive" src="img/'+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].src+'"></div></div>';    
+        HTML += '<div class="basePairWrap"><div class="neucleotide codingStrand '+bioObj.dna[dObj.dnaArr[n]].class+'"><img class="img-responsive" src="img/'+bioObj.dna[dObj.dnaArr[n]].src.codingStrand+'"></div><div class="neucleotide templateStrand '+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].class+'"><img class="img-responsive" src="img/'+bioObj.dna[complementaryDnaBase(dObj.dnaArr[n])].src.templateStrand+'"></div></div>';    
     }
     HTML += '<div class="fadeOut fadeOut_right"></div>';
     // HTML += '<div class="Clear"></div>';

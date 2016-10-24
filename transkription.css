@@ -5,6 +5,7 @@
 	/*font-size: 2vw;*/  /*Setting dynamic font-size, see: https://developer.mozilla.org/en-US/docs/Web/CSS/length */
 	position: relative;  /* This is needed because of the absolute position of the dropzone */
 	/*background-image: url("img/sphere.jpg");*/
+	/*background-color: #454E4F;*/
 }
 .backgroundImg{
 	position: absolute; 
@@ -12,27 +13,26 @@
 }
 
 .adenin{
-	background-color: #990000;
+	/*background-color: #990000;*/
 }
 .cytosin{
-	background-color: #0000cc;
+	/*background-color: #0000cc;*/
 }
 .guanin{
-	background-color: #6666ff;
+	/*background-color: #6666ff;*/
 }
 .thymin, .uracil{
-	background-color: #ff3333;
+	/*background-color: #ff3333;*/
 }
 
 .basePairWrap{
 	width: 5%;
 	height: 40%;
-	/* border: 1px solid #000; */ 
 	display: inline-block;
 	position: relative;
 	top: 30%;
 }
-
+/*
 .templateStrand{
 	position: relative;
 }
@@ -40,12 +40,24 @@
 	position: relative;
 	top: 50%;
 }
+*/
+.codingStrand{
+	position: relative;
+}
+.templateStrand{
+	position: relative;
+	top: 50%;
+}
 
 .neucleotide{
 	height: 25%;
-	border: 1px solid #000;
+	/*border: 1px solid #000;*/
 	text-align: center;
 	font-size: 2.5vw;  /*Setting dynamic font-size, see: https://developer.mozilla.org/en-US/docs/Web/CSS/length */
+	padding-left: 0px;
+	padding-right: 0px;
+    margin-left: -1px;
+    margin-right: -1px;
 }
 #dropZone{
 	width: 5%;
@@ -85,4 +97,16 @@
 	height: 10%;
 	position: absolute;
 	z-index: 15;
+}
+
+.templateStrand.thymin{
+	top: 46.3%
+}
+
+.templateStrand.cytosin{
+	top: 46.3%
+}
+
+.templateStrand.guanin{
+	top: 50.5%;
 }
