@@ -630,25 +630,25 @@ function correctmRnaNucleotide(){
 }
 
 
-// function randomlySpacedVec(){
+function randomlySpacedVec(){
 
-//     // This is what this function is trying to acchive (in array-form):
-//     // var x = Math.round(Math.random()*90 + 5);
-//     // var y = Math.round(Math.random()*10 + 5);
+    // This is what this function is trying to acchive (in array-form):
+    // var x = Math.round(Math.random()*90 + 5);
+    // var y = Math.round(Math.random()*10 + 5);
 
-//     if ((typeof(dObj.vecObj)==='undefined')) {
-//         var xArr = {};
-//         var yArr = {};
+    if ((typeof(dObj.vecObj)==='undefined')) {
+        var xArr = [];
+        var yArr = [];
 
-//         for (var i = 0; i <= 90; i++) { xArr.push(i+5); }
-//         for (var i = 0; i <= 10; i++) { yArr.push(i+5); }
+        for (var i = 0; i <= 90; i++) { xArr.push(i+5); }
+        for (var i = 0; i <= 10; i++) { yArr.push(i+5); }
 
-//         dObj.vecObj = {xArr: xArr, yArr: yArr, x: null, y: null};
-//     }
+        dObj.vecObj = {xArr: xArr, yArr: yArr, x: null, y: null};
+    }
 
-//     var index = Math.round(Math.random()*xArr.length);
-//     dObj.vecObj.x =  xArr[index];
-// }
+    var index = Math.round(Math.random()*xArr.length);
+    dObj.vecObj.x =  xArr[index];
+}
 
 
 function addDraggableNeucleotides(){
@@ -739,7 +739,7 @@ $(document).ready(function() {
 
     getHeightOfDnaNucleotides();
 
-    brownianMotionInit();
+    // brownianMotionInit();
     
 });
 
