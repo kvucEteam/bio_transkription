@@ -44,6 +44,11 @@
 .codingStrand{
 	position: relative;
 }
+.templateStrandWrap{
+	height: 50%;
+	position: relative;
+	top: 25%;
+}
 .templateStrand{
 	position: relative;
 	top: 50%;
@@ -68,7 +73,7 @@
 	/*top: 50%;*/
 	top: 47%;
 	left: 50%;   /* <--- IMPORTANT - THIS VALUE IS SET INLINE BY JQuery in "correctmRnaNucleotide()"! NOTE: 50% = 5%*10 */
-	z-index: 10;
+	z-index: 0;
 	background-color: #f8f8f6;
 }
 
@@ -110,14 +115,48 @@
 	z-index: 15;
 }
 
+.templateStrandWrap{
+	/*border: 1px solid #F00;*/
+}
 .templateStrand.thymin{
-	top: 46.3%
+	position: absolute;
+	top: 39.3%
 }
 
 .templateStrand.cytosin{
-	top: 46.3%
+	top: 39.3%
 }
 
 .templateStrand.guanin{
-	top: 50.5%;
+	position: absolute;
+	top: 47.8%;
+}
+.templateStrand.adenin{
+	position: absolute;
+	top: 47.0%;
+}
+
+.mRNA_string{
+	/*position: relative;*/
+	z-index: 0;
+}
+
+.mRNA_string.uracil{
+	position: absolute;
+	left: 1%;
+	top: -7.5%;
+}
+
+.mRNA_string.cytosin{
+	position: absolute;
+	top: -7.5%;
+}
+
+.mRNA_string.guanin{
+	position: absolute;
+	top: -7.5%;
+}
+.mRNA_string.adenin{
+	position: absolute;
+	top: -7.7%;
 }
