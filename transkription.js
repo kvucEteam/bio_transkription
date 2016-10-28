@@ -16,16 +16,8 @@
 
 // background-color: #454E4F == 069078079,  #454C4C == 069076076
 
-// TYPES OG MUTATIONS:
-// http://evolution.berkeley.edu/evolibrary/article/mutations_03 
 
 var bioObj = {
-        // dna : { 
-        //     A : {name:"Adenin", class:"adenin DNA", src:"a.png"},
-        //     C : {name:"Cytosin",class:"cytosin DNA", src:"c.png"},
-        //     G : {name:"Guanin", class:"guanin DNA", src:"g.png"},
-        //     T : {name:"Thymin", class:"thymin DNA", src:"t.png"}
-        // },
         dna : { 
             A : {name:"Adenin", class:"adenin DNA", src: {codingStrand: 'ao.png', templateStrand: 'an.png'} },
             C : {name:"Cytosin",class:"cytosin DNA", src: {codingStrand: 'co.png', templateStrand: 'cn.png'} },
@@ -37,183 +29,17 @@ var bioObj = {
             C : {name:"Cytosin",class:"cytosin mRNA", src:"cm.png"},
             G : {name:"Guanin", class:"guanin mRNA", src:"gm.png"},
             U : {name:"Uracil", class:"uracil mRNA", src:"um.png"}
-        },
-        tRNA : { 
-            U : {
-                U: {
-                    U: {name: "Phenylalanin", sym: "Phe", symShort: "F"},
-                    C: {name: "Phenylalanin", sym: "Phe", symShort: "F"},
-                    A: {name: "Leucin", sym: "Leu", symShort: "L"},
-                    G: {name: "Leucin", sym: "Leu", symShort: "L"}
-                },
-                C: {
-                    U: {name: "Serin", sym: "Ser", symShort: "S"},
-                    C: {name: "Serin", sym: "Ser", symShort: "S"},
-                    A: {name: "Serin", sym: "Ser", symShort: "S"},
-                    G: {name: "Serin", sym: "Ser", symShort: "S"}
-                },
-                A: {
-                    U: {name: "Tyrosin", sym: "Tyr", symShort: "Y"},
-                    C: {name: "Tyrosin", sym: "Tyr", symShort: "Y"},
-                    A: {name: "", codonAction: "STOP"},
-                    G: {name: "", codonAction: "STOP"}
-                },
-                G: {
-                    U: {name: "Cystein", sym: "Cys", symShort: "C"},
-                    C: {name: "Cystein", sym: "Cys", symShort: "C"},
-                    A: {name: "", codonAction: "STOP"},
-                    G: {name: "Tryptophan", sym: "Trp", symShort: "W"}
-                }
-            },
-            C : {
-                U: {
-                    U: {name: "Leucin", sym: "Leu", symShort: "L"},
-                    C: {name: "Leucin", sym: "Leu", symShort: "L"},
-                    A: {name: "Leucin", sym: "Leu", symShort: "L"},
-                    G: {name: "Leucin", sym: "Leu", symShort: "L"}
-                },
-                C: {
-                    U: {name: "Prolin", sym: "Pro", symShort: "P"},
-                    C: {name: "Prolin", sym: "Pro", symShort: "P"},
-                    A: {name: "Prolin", sym: "Pro", symShort: "P"},
-                    G: {name: "Prolin", sym: "Pro", symShort: "P"}
-                },
-                A: {
-                    U: {name: "Histidin", sym: "His", symShort: "H"},
-                    C: {name: "Histidin", sym: "His", symShort: "H"},
-                    A: {name: "Glutamin", sym: "Gln", symShort: "Q"},
-                    G: {name: "Glutamin", sym: "Gln", symShort: "Q"}
-                },
-                G: {
-                    U: {name: "Arginin", sym: "Arg", symShort: "R"},
-                    C: {name: "Arginin", sym: "Arg", symShort: "R"},
-                    A: {name: "Arginin", sym: "Arg", symShort: "R"},
-                    G: {name: "Arginin", sym: "Arg", symShort: "R"}
-                }
-            },
-            A : {
-                U: {
-                    U: {name: "Isoleucin", sym: "Ile", symShort: "I"},
-                    C: {name: "Isoleucin", sym: "Ile", symShort: "I"},
-                    A: {name: "Isoleucin", sym: "Ile", symShort: "I"},
-                    G: {name: "Methionin", sym: "Met", symShort: "M", codonAction: "START"}
-                },
-                C: {
-                    U: {name: "Threonin", sym: "Thr", symShort: "T"},
-                    C: {name: "Threonin", sym: "Thr", symShort: "T"},
-                    A: {name: "Threonin", sym: "Thr", symShort: "T"},
-                    G: {name: "Threonin", sym: "Thr", symShort: "T"}
-                },
-                A: {
-                    U: {name: "Aspargin", sym: "Asn", symShort: "N"},
-                    C: {name: "Aspargin", sym: "Asn", symShort: "N"},
-                    A: {name: "Lysin", sym: "Lys", symShort: "K"},
-                    G: {name: "Lysin", sym: "Lys", symShort: "K"}
-                },
-                G: {
-                    U: {name: "Serin", sym: "Ser", symShort: "S"},
-                    C: {name: "Serin", sym: "Ser", symShort: "S"},
-                    A: {name: "Arginin", sym: "Arg", symShort: "R"},
-                    G: {name: "Arginin", sym: "Arg", symShort: "R"}
-                }
-            },
-            G : {
-                U: {
-                    U: {name: "Valin", sym: "Val", symShort: "V"},
-                    C: {name: "Valin", sym: "Val", symShort: "V"},
-                    A: {name: "Valin", sym: "Val", symShort: "V"},
-                    G: {name: "Valin", sym: "Val", symShort: "V"}
-                },
-                C: {
-                    U: {name: "Alanin", sym: "Ala", symShort: "A"},
-                    C: {name: "Alanin", sym: "Ala", symShort: "A"},
-                    A: {name: "Alanin", sym: "Ala", symShort: "A"},
-                    G: {name: "Alanin", sym: "Ala", symShort: "A"}
-                },
-                A: {
-                    U: {name: "Aspargin syre", sym: "Asp", symShort: "D"},
-                    C: {name: "Aspargin syre", sym: "Asp", symShort: "D"},
-                    A: {name: "Glutamin syre", sym: "Glu", symShort: "E"},
-                    G: {name: "Glutamin syre", sym: "Glu", symShort: "E"}
-                },
-                G: {
-                    U: {name: "Glysin", sym: "Gly", symShort: "G"},
-                    C: {name: "Glysin", sym: "Gly", symShort: "G"},
-                    A: {name: "Glysin", sym: "Gly", symShort: "G"},
-                    G: {name: "Glysin", sym: "Gly", symShort: "G"}
-                }
-            } 
         }
 }
 
 var dObj = {
     duration: 1000,  // Average animation time in Brownian motion
-    length: 2        // Average length in percent relative to screen height or width in Brownian motion animation.
+    length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
+    wrongFeedbackTriggered: false,
+    idOfWronglyMovedNeucleotide: null,
+    idOfLastMovedNeucleotide: null
 };
 
-
-
-
-function mRNAtoProtein(mRNA){
-    var proteinObj = {
-        name: '',
-        sym: '',
-        symShort: ''
-    }
-
-    var mRNA = mRNA.split('');
-    
-    // for (var l in mRNA){
-    //     for (var m in mRNA[l]){
-    //         for (var n in mRNA[l][m]){
-    //             if (typeof(mRNA[l][m][n].codonAction)==='undefined'){
-    //                 proteinObj.name += mRNA[l][m][n].name+' ';
-    //                 proteinObj.sym += mRNA[l][m][n].sym+' ';
-    //                 proteinObj.symShort += mRNA[l][m][n].symShort+' ';
-    //             }
-    //         }
-    //     }
-    // }
-
-    var codonArr = [];
-
-    var numOfCodons = Math.floor(mRNA.length/3);
-    var count = 0;
-    for (var i = 0; i < numOfCodons; i++) {
-        var condon = [];
-        for (var k = 0; k < 3; k++) {
-            condon.push(mRNA[count]);
-            ++count;
-        }
-        codonArr.push(condon);
-    };
-    console.log('mRNAtoProtein - codonArr: ' + JSON.stringify(codonArr));
-
-    for (var n in codonArr){
-        var ca = codonArr[n];
-        if (typeof(bioObj.tRNA[ca[0]][ca[1]][ca[2]])!=='undefined'){
-            if (typeof(bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction)==='undefined'){
-                proteinObj.name += bioObj.tRNA[ca[0]][ca[1]][ca[2]].name+' ';
-                proteinObj.sym += bioObj.tRNA[ca[0]][ca[1]][ca[2]].sym+' ';
-                proteinObj.symShort += bioObj.tRNA[ca[0]][ca[1]][ca[2]].symShort+' ';
-            } else {
-                if ((bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction.toLowerCase() == 'stop') && (codonArr.length >= n)){
-                    console.log('mRNAtoProtein - ERROR - Codon nr '+n+' er et "' +bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction+ '" codon. Proteinet bliver ikke derfor ikke længere end '+n+' codons!');
-                } 
-                if (bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction.toLowerCase() == 'start'){
-                    console.log('mRNAtoProtein - ERROR - Codon nr '+n+' er et "' +bioObj.tRNA[ca[0]][ca[1]][ca[2]].codonAction+ '" codon. Proteinet bliver ikke derfor ikke det du regner med!');
-                }
-            }
-        } else {
-            console.log('mRNAtoProtein - ERROR - Codon nr '+n+', som er : "' + ca[0]+ca[1]+ca[2]+ '" eksistere ikke!');
-        }
-    }
-    console.log('mRNAtoProtein - proteinObj: ' + JSON.stringify(proteinObj));
-
-    return proteinObj;
-}
-console.log('mRNAtoProtein: ' + JSON.stringify(mRNAtoProtein('GUAGUAUGAGUA')));  // Nr 3 codon = Stop-codon 
-console.log('mRNAtoProtein: ' + JSON.stringify(mRNAtoProtein('GUAGUAAUGGUA')));  // Nr 3 codon = Stop-codon
 
 
 function basicPosCalc(){
@@ -375,8 +201,6 @@ function giveFeedback(valid, id, callBack){
     // $('#draggable_neucleotide_'+id).css({left: dObj.xPos, top: dObj.yPos});
     console.log('giveFeedback - id: ' + id);
 
-
-
     var HTML = 'TEST';
 
     UserMsgBox("body", HTML);
@@ -389,7 +213,10 @@ function giveFeedback(valid, id, callBack){
 
     }
 
-    dObj.userMsgBox_click = false;
+    dObj.wrongFeedbackTriggered = true;
+    dObj.idOfWronglyMovedNeucleotide = id;
+
+    // dObj.userMsgBox_click = false;
 
     callBack();
 
@@ -465,9 +292,12 @@ function anmateDnaMovement(){
             $('.draggable_neucleotide').fadeOut(function(){
                 
             });
+
             addDraggableNeucleotides();
-            // $('.draggable_neucleotide').draggable();
             setEventhandlers();   // Reset all eventhandlers - the line above is NOT enough!
+
+            brownianMotion3(dObj.idOfLastMovedNeucleotide, dObj.duration, dObj.length);  // This is needed to make the correctly dropped neucleotide move again AFTER is has been added by the lines above. 
+            
         });
 
 
@@ -507,6 +337,8 @@ function setEventhandlers(){
             var id = $(this).prop('id').replace('draggable_neucleotide_','');   // <------- MARK (#3a#) - IMPORTANT: This is beter than (#3b#)
             console.log('draggable_neucleotide - mousedown - id: ' + id);
 
+            dObj.idOfLastMovedNeucleotide = id;
+
             // ATO found the following if-else construct, that solves the error-sound issue. It is a good (but undocumented) way of triggering "events" on drop / not-drop.
             // SEE:   http://jamesallardice.com/run-a-callback-function-when-a-jquery-ui-draggable-widget-reverts/
             if(valid) {
@@ -537,10 +369,11 @@ function setEventhandlers(){
                 // error_sound();
 
                 giveFeedback(valid, id, function(valid){  // <------ VIRKER IKKE! Funktionen "delay()" i "giveFeedback()" returnere rigtig nok sit callback når userMsgBox er lukket, men console.log() i MARK (#1#) exekveres med det samme! LØSNING: animer at nukleotiderne flyver tilbage på plads manuelt! ()
-                    console.log('revert - valid - giveFeedback');
+                console.log('revert - valid - giveFeedback');
 
-                    // dObj.moveObjArr[id].brownianMotion = true;
-                    // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+                // This makes the neucleotide move again:
+                // dObj.moveObjArr[id].brownianMotion = true;
+                // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
                     
                 });
 
@@ -566,14 +399,15 @@ function setEventhandlers(){
                 dObj.moveObjArr[id].brownianMotion = true;
                 $(this).width(dObj.moveObjArr[id].width);    // Re-ajust the width, since JQuery wants to set a new width
                 $(this).height(dObj.moveObjArr[id].height);  // Re-ajust the height, since JQuery wants to set a new height
+                
+                // This makes the neucleotide move again:
+                // dObj.moveObjArr[id].brownianMotion = true;
                 // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
-
-                dObj.moveObjArr[id].brownianMotion = true;
-                brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
             }
             console.log('valid - giveFeedback - END');  // MARK (#1#)
             
-            return !valid;
+            // return !valid;
+            return false;  // returning "false" prevents revert from happening (eventhough the "revert"-event is called).
         },
         start: function(event, ui) {
             console.log('card - START');
@@ -717,11 +551,26 @@ function setEventhandlers(){
 
 
     $(document).on('click', ".MsgBox_bgr", function(event) {
-        dObj.userMsgBox_click = true;
+
+        if (dObj.wrongFeedbackTriggered){
+
+            // This makes the neucleotide move again after failed attempt to drag:
+            dObj.moveObjArr[dObj.idOfWronglyMovedNeucleotide].brownianMotion = true;
+            brownianMotion3(dObj.idOfWronglyMovedNeucleotide, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+
+            dObj.wrongFeedbackTriggered = false;
+        }
     });
 
     $(document).on('click', "#UserMsgBox", function(event) {
-        dObj.userMsgBox_click = true;
+        if (dObj.wrongFeedbackTriggered){
+
+            // This makes the neucleotide move again after failed attempt to drag:
+            dObj.moveObjArr[dObj.idOfWronglyMovedNeucleotide].brownianMotion = true;
+            brownianMotion3(dObj.idOfWronglyMovedNeucleotide, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+
+            dObj.wrongFeedbackTriggered = false;
+        }
     });
 }
 
@@ -779,6 +628,27 @@ function correctmRnaNucleotide(){
 
     return compBase[neucleotideInDna];
 }
+
+
+// function randomlySpacedVec(){
+
+//     // This is what this function is trying to acchive (in array-form):
+//     // var x = Math.round(Math.random()*90 + 5);
+//     // var y = Math.round(Math.random()*10 + 5);
+
+//     if ((typeof(dObj.vecObj)==='undefined')) {
+//         var xArr = {};
+//         var yArr = {};
+
+//         for (var i = 0; i <= 90; i++) { xArr.push(i+5); }
+//         for (var i = 0; i <= 10; i++) { yArr.push(i+5); }
+
+//         dObj.vecObj = {xArr: xArr, yArr: yArr, x: null, y: null};
+//     }
+
+//     var index = Math.round(Math.random()*xArr.length);
+//     dObj.vecObj.x =  xArr[index];
+// }
 
 
 function addDraggableNeucleotides(){
@@ -869,7 +739,7 @@ $(document).ready(function() {
 
     getHeightOfDnaNucleotides();
 
-    // brownianMotionInit();
+    brownianMotionInit();
     
 });
 
