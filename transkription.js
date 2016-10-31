@@ -201,9 +201,9 @@ function giveFeedback(valid, id, callBack){
     // $('#draggable_neucleotide_'+id).css({left: dObj.xPos, top: dObj.yPos});
     console.log('giveFeedback - id: ' + id);
 
-    var HTML = 'TEST';
+    var HTML = 'Du skal anvende baseparringsprincippet i kendt fra DNA replikation, men med den undtagelse at Urasil erstatter Thymin i mRNA. Dvs: Cytosin (C) parres med Guanin (G) og Urasil (U) parres Thymin (T).';
 
-    UserMsgBox("body", HTML);
+    UserMsgBox("body", '<h3>Du har svaret <span class="label label-danger">Forkert!</span></h3><p>'+HTML+'</p>');
 
     if (!valid) {  // IMPORTANT: valid = "false" if it is the wrong draggable!
         console.log('giveFeedback - WRONG');
@@ -220,19 +220,6 @@ function giveFeedback(valid, id, callBack){
 
     callBack();
 
-    // delay();
-
-    // function delay(){  
-        
-    //     console.log('delay - giveFeedback - CALLED'); 
-
-    //     if ($('#UserMsgBox').length == 0){
-    //         callBack();
-    //         return true;
-    //     }
-
-    //     setTimeout(delay, 5000);
-    // }
 }
 
 
@@ -630,25 +617,52 @@ function correctmRnaNucleotide(){
 }
 
 
+function shuffelArray(ItemArray) {
+    var NumOfItems = ItemArray.length;
+    var NewArray = ItemArray.slice(); // Copy the array...
+    var Item2;
+    var TempItem1;
+    var TempItem2;
+    for (var Item1 = 0; Item1 < NumOfItems; Item1++) {
+        Item2 = Math.floor(Math.random() * NumOfItems);
+        TempItem1 = NewArray[Item1];
+        TempItem2 = NewArray[Item2];
+        NewArray[Item2] = TempItem1;
+        NewArray[Item1] = TempItem2;
+    }
+    return NewArray;
+}
+
+
 function randomlySpacedVec(){
 
     // This is what this function is trying to acchive (in array-form):
     // var x = Math.round(Math.random()*90 + 5);
     // var y = Math.round(Math.random()*10 + 5);
 
-    if ((typeof(dObj.vecObj)==='undefined')) {
+    if ((typeof(dObj.vecObj)==='undefined') || ((typeof(dObj.moveObjArr)!=='undefined') && (dObj.moveObjArr.length == 0))) {
         var xArr = [];
         var yArr = [];
 
-        for (var i = 0; i <= 90; i++) { xArr.push(i+5); }
-        for (var i = 0; i <= 10; i++) { yArr.push(i+5); }
+        for (var i = 1; 5*i < 90; i++) { xArr.push(5*i+5); }
+        for (var i = 1; i < 10; i++) { yArr.push(i+5); }
 
-        dObj.vecObj = {xArr: xArr, yArr: yArr, x: null, y: null};
+        dObj.vecObj = {xArr: shuffelArray(xArr), yArr: shuffelArray(yArr), x: null, y: null};
     }
 
-    var index = Math.round(Math.random()*xArr.length);
-    dObj.vecObj.x =  xArr[index];
+    dObj.vecObj.x = dObj.vecObj.xArr.splice(0, 1)[0];
+
+    dObj.vecObj.y = dObj.vecObj.yArr.splice(0, 1)[0];
+
+    console.log('randomlySpacedVec - vecObj: ' + JSON.stringify(dObj.vecObj));
+    // console.log('randomlySpacedVec - yArr: ' + dObj.vecObj.yArr);
+    
+    return {x:dObj.vecObj.x, y:dObj.vecObj.y};
 }
+console.log('randomlySpacedVec 1: ' + randomlySpacedVec());
+console.log('randomlySpacedVec 2: ' + randomlySpacedVec());
+console.log('randomlySpacedVec 3: ' + randomlySpacedVec());
+
 
 
 function addDraggableNeucleotides(){
@@ -670,8 +684,13 @@ function addDraggableNeucleotides(){
     for (var i = 0; i < count; i++) {
         // var x = Math.round(Math.random()*90 + 5);
         // var y = Math.round(Math.random()*15);
-        var x = Math.round(Math.random()*90 + 5);
-        var y = Math.round(Math.random()*10 + 5);
+
+        // var x = Math.round(Math.random()*90 + 5);  // <----- OK! 28-10-2016
+        // var y = Math.round(Math.random()*10 + 5);  // <----- OK! 28-10-2016
+
+        var Tvec = randomlySpacedVec();
+        var x = Tvec.x;
+        var y = Tvec.y;
         if (Math.random() <= 0.5){
             $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
         } else {
@@ -739,7 +758,7 @@ $(document).ready(function() {
 
     getHeightOfDnaNucleotides();
 
-    // brownianMotionInit();
+    brownianMotionInit();
     
 });
 
