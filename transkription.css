@@ -65,16 +65,17 @@
     margin-right: -1px;
 }
 #dropZone{
+	border-radius: 4px;
 	width: 5%;
 	/*height: 10%;*/
-	height: 13%;
-	border: 1px dashed #454C4C;
+	height: 11%;
+	border: 2px dashed #FFF;
 	position: absolute; /* This absolute position is possible because of the relative position of its parent (#transcriptionContainer) */
 	/*top: 50%;*/
-	top: 47%;
+	top: 49%;
 	left: 50%;   /* <--- IMPORTANT - THIS VALUE IS SET INLINE BY JQuery in "correctmRnaNucleotide()"! NOTE: 50% = 5%*10 */
 	z-index: 0;
-	background-color: #f8f8f6;
+	/*background-color: #f8f8f6;*/
 }
 
 .fadeOut{
@@ -159,4 +160,11 @@
 .mRNA_string.adenin{
 	position: absolute;
 	top: -7.7%;
+}
+
+.neucleotide {
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */      
 }

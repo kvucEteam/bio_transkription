@@ -201,7 +201,7 @@ function giveFeedback(valid, id, callBack){
     // $('#draggable_neucleotide_'+id).css({left: dObj.xPos, top: dObj.yPos});
     console.log('giveFeedback - id: ' + id);
 
-    var HTML = 'Du skal anvende baseparringsprincippet i kendt fra DNA replikation, men med den undtagelse at Urasil erstatter Thymin i mRNA. Dvs: Cytosin (C) parres med Guanin (G) og Urasil (U) parres Thymin (T).';
+    var HTML = 'Du skal anvende baseparringsprincippet kendt fra DNA replikation, men med den undtagelse at uracil erstatter thymin i mRNA. Dvs: cytosin (C) parres med guanin (G) og uracil (U) parres med thymin (T).';
 
     UserMsgBox("body", '<h3>Du har svaret <span class="label label-danger">Forkert!</span></h3><p>'+HTML+'</p>');
 
@@ -305,6 +305,11 @@ function anmateDnaMovement(){
 }
 
 
+function isDraggableValid(){
+    // dObj.currentDraggableNeucleotide
+}
+
+
 function setEventhandlers(){
 
     $(document).on('mousemove', "#transcriptionContainer", function(event) {
@@ -355,41 +360,52 @@ function setEventhandlers(){
                 // console.log("Dropped in a invalid location - valid: " + JSON.stringify(valid));
                 // error_sound();
 
-                giveFeedback(valid, id, function(valid){  // <------ VIRKER IKKE! Funktionen "delay()" i "giveFeedback()" returnere rigtig nok sit callback når userMsgBox er lukket, men console.log() i MARK (#1#) exekveres med det samme! LØSNING: animer at nukleotiderne flyver tilbage på plads manuelt! ()
-                console.log('revert - valid - giveFeedback');
+                if (!dObj.isCurrentDraggableCorrect) {
 
-                // This makes the neucleotide move again:
-                // dObj.moveObjArr[id].brownianMotion = true;
-                // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
-                    
-                });
+                    giveFeedback(valid, id, function(valid){  // <------ VIRKER IKKE! Funktionen "delay()" i "giveFeedback()" returnere rigtig nok sit callback når userMsgBox er lukket, men console.log() i MARK (#1#) exekveres med det samme! LØSNING: animer at nukleotiderne flyver tilbage på plads manuelt! ()
+                        console.log('revert - valid - giveFeedback');
 
+                        // This makes the neucleotide move again:
+                        // dObj.moveObjArr[id].brownianMotion = true;
+                        // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+                        
+                    });
 
-                //////////////////////////////////////////////////////////////////////////////////
-                //
-                //  FORHINDRE "REVERT" - se: http://stackoverflow.com/questions/7056520/with-jquery-uis-draggable-how-do-you-change-the-revert-on-stop
-                //
-                //  (efter at "revert" er forhindret efter ovenstående metode, så skal draggable animeres tilbage på plads!)
-                //
-                //  HUSK AT UKOMMENTERE (forneden):
-                //  dObj.moveObjArr[id].brownianMotion = true;
-                //  brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
-                //
-                ////////////////////////////////////////////////////////////////////////////////// 
-
-
-                // alert("Reverting!");  // <----- EN HELT ALMINDELIG ALERT VIRKER!!!
-
-
-                var id = $(this).prop('id').replace('draggable_neucleotide_','');
-                console.log('card - REVERT - id: ' + id);
-                dObj.moveObjArr[id].brownianMotion = true;
-                $(this).width(dObj.moveObjArr[id].width);    // Re-ajust the width, since JQuery wants to set a new width
-                $(this).height(dObj.moveObjArr[id].height);  // Re-ajust the height, since JQuery wants to set a new height
                 
-                // This makes the neucleotide move again:
-                // dObj.moveObjArr[id].brownianMotion = true;
-                // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+
+
+                    //////////////////////////////////////////////////////////////////////////////////
+                    //
+                    //  FORHINDRE "REVERT" - se: http://stackoverflow.com/questions/7056520/with-jquery-uis-draggable-how-do-you-change-the-revert-on-stop
+                    //
+                    //  (efter at "revert" er forhindret efter ovenstående metode, så skal draggable animeres tilbage på plads!)
+                    //
+                    //  HUSK AT UKOMMENTERE (forneden):
+                    //  dObj.moveObjArr[id].brownianMotion = true;
+                    //  brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+                    //
+                    ////////////////////////////////////////////////////////////////////////////////// 
+
+
+                    // alert("Reverting!");  // <----- EN HELT ALMINDELIG ALERT VIRKER!!!
+
+
+                    var id = $(this).prop('id').replace('draggable_neucleotide_','');
+                    console.log('card - REVERT - id: ' + id);
+                    dObj.moveObjArr[id].brownianMotion = true;
+                    $(this).width(dObj.moveObjArr[id].width);    // Re-ajust the width, since JQuery wants to set a new width
+                    $(this).height(dObj.moveObjArr[id].height);  // Re-ajust the height, since JQuery wants to set a new height
+                    
+                    // This makes the neucleotide move again:
+                    // dObj.moveObjArr[id].brownianMotion = true;
+                    // brownianMotion3(id, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
+                } else {
+
+                    // This makes the correct neucleotide move again:
+                    dObj.moveObjArr[id].brownianMotion = true;
+                    brownianMotion3(id, dObj.duration, dObj.length);  // added 04-11-2016
+
+                }
             }
             console.log('valid - giveFeedback - END');  // MARK (#1#)
             
@@ -404,6 +420,8 @@ function setEventhandlers(){
 
             var baseClass = $(this).attr('class');
             console.log('start - baseClass: ' + baseClass);
+
+            dObj.isCurrentDraggableCorrect = (baseClass.indexOf('correct_mRNA') !== -1)? true : false;
 
             for (var n in bioObj.mRNA){
                 if (baseClass.indexOf(bioObj.mRNA[n].name.toLowerCase()) !== -1){
@@ -715,6 +733,11 @@ function addDraggableNeucleotides(){
     };
 
     console.log('addDraggableNeucleotides - dObj.moveObjArr: ' + JSON.stringify(dObj.moveObjArr));
+}
+
+
+function addDraggableNeucleotides2(){
+
 }
 
 
