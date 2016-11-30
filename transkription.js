@@ -32,14 +32,15 @@ var bioObj = {
         }
 }
 
-var dObj = {
-    duration: 1000,  // Average animation time in Brownian motion
-    length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
-    wrongFeedbackTriggered: false,
-    idOfWronglyMovedNeucleotide: null,
-    idOfLastMovedNeucleotide: null
-};
-
+function init_dObj(){
+    window.dObj = {
+        duration: 1000,  // Average animation time in Brownian motion
+        length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
+        wrongFeedbackTriggered: false,
+        idOfWronglyMovedNeucleotide: null,
+        idOfLastMovedNeucleotide: null
+    };
+}
 
 
 function basicPosCalc(){
@@ -234,6 +235,83 @@ function getHeightOfDnaNucleotides(){
 
 
 
+function modifyUserMsgBox_removeWhenClicked(selector, removeCloseClass) {
+    $('#UserMsgBox').unbind('click');
+    $('.MsgBox_bgr').unbind('click');
+
+    if (removeCloseClass) {
+        $('.CloseClass').remove();
+    } else {
+        $(document).on('click', '.CloseClass', function(event) {
+            $(".MsgBox_bgr").fadeOut(200, function() {
+                $(this).remove();
+            });
+        });
+    }
+
+    $(document).on('click', selector, function(event) {
+        $(".MsgBox_bgr").fadeOut(200, function() {
+            $(this).remove();
+        });
+    });
+}
+
+
+
+/**
+ * DESCRIPTION: 
+ * 
+ */  
+function UserMsgBox_mod(msg, showStandardYesNoBtns, callbackIf_yes, callbackIf_no){
+    console.log('UserMsgBox_mod - CALLED');
+    var yesNoBtns = '<div><div class="btn btn-success" id="userMsgBox_yes">Ja</div><div class="btn btn-danger" id="userMsgBox_no">Nej</div></div>';
+    UserMsgBox("body", msg+((showStandardYesNoBtns)?yesNoBtns:''));
+
+    $('#UserMsgBox').unbind('click');
+    $('.MsgBox_bgr').unbind('click');
+
+    if (showStandardYesNoBtns) {
+        $('.CloseClass').remove();
+
+    } else {
+        $(document).on('click', '.CloseClass', function(event) {
+            $(".MsgBox_bgr").fadeOut(200, function() {
+                $(this).remove();
+            });
+        });
+    }
+
+    $(document).on('click', '#userMsgBox_yes', function(event) {
+        console.log('.userMsgBox_yes - CLICKED');
+        $(".MsgBox_bgr").fadeOut(200, function() {
+            $(this).remove();
+
+            callbackIf_yes();
+        });
+    });
+
+
+    $(document).on('click', '#userMsgBox_no', function(event) {
+        console.log('.userMsgBox_no - CLICKED');
+        $(".MsgBox_bgr").fadeOut(200, function() {
+            $(this).remove();
+
+            callbackIf_no();
+        });
+    });
+}
+
+
+callbackIf_yes = function(){
+     main();
+}
+
+
+callbackIf_no = function(){
+   
+}
+
+
 function anmateDnaMovement(){
 
     ++dObj.currentNucleotide;
@@ -275,18 +353,29 @@ function anmateDnaMovement(){
             width: '0%',
             duration: 400
         }, function(){
-            $(this).remove();
-            $('.draggable_neucleotide').fadeOut(function(){
-                
-            });
 
-            addDraggableNeucleotides();
-            setEventhandlers();   // Reset all eventhandlers - the line above is NOT enough!
+            $(this).remove();      // Removes the first .basePairWrap
+
+            // $('.draggable_neucleotide').fadeOut(function(){                                      // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+                
+            // });
+
+            // addDraggableNeucleotides();                                                         // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+            // setEventhandlers();   // Reset all eventhandlers - the line above is NOT enough!    // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+
+            movePriviousCorrectNeucleotideBackToOriginalPosition();   // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+
+            insertCorrectDraggableClasses();  // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
 
             brownianMotion3(dObj.idOfLastMovedNeucleotide, dObj.duration, dObj.length);  // This is needed to make the correctly dropped neucleotide move again AFTER is has been added by the lines above. 
             
         });
 
+        // movePriviousCorrectNeucleotideBackToOriginalPosition();   // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+
+        // insertCorrectDraggableClasses();  // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+
+        // brownianMotion3(dObj.idOfLastMovedNeucleotide, dObj.duration, dObj.length);  // This is needed to make the correctly dropped neucleotide move again AFTER is has been added by the lines above. 
 
 
         // $(".basePairWrap").eq(0).animate({
@@ -297,7 +386,10 @@ function anmateDnaMovement(){
 
     } else {
 
-        UserMsgBox("body", 'Tillykke du er færdig med øvelsen! (kursist ser video af mRNA forlade cellekærnen)');
+        // UserMsgBox("body", 'Tillykke du er færdig med øvelsen! (kursist ser video af mRNA forlade cellekærnen)');
+        
+        var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Ønsker du at prøve igen? <br><br> Tryk "Ja" hvis du ønsker at prøve igen, ellers tryk "Nej" for at gå videre og se den afsluttede video.';
+        UserMsgBox_mod(msg, true, callbackIf_yes, callbackIf_no);
 
     }
     
@@ -338,7 +430,7 @@ function setEventhandlers(){
                 // console.log("Dropped in a valid location - valid: " + JSON.stringify(valid));
                 // correct_sound();
 
-                dObj.moveObjArr[id].brownianMotion = false;
+                // dObj.moveObjArr[id].brownianMotion = false;   // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
 
                 // TEST TIL KOPIERING:
                 // <div class="neucleotide correct_mRNA adenin mRNA mRNA_string"><img class="img-responsive" src="img/am.png"></div>
@@ -346,16 +438,21 @@ function setEventhandlers(){
                 // <div class="neucleotide correct_mRNA guanin mRNA mRNA_string"><img class="img-responsive" src="img/gm.png"></div>
                 // <div class="neucleotide correct_mRNA uracil mRNA mRNA_string"><img class="img-responsive" src="img/um.png"></div>
 
+                // if (dObj.isCurrentDraggableCorrect){    // <---------  THIS DOES NOT WORK!!!!
+                //     console.log('isCurrentDraggableCorrect: '+dObj.isCurrentDraggableCorrect+' - HIDE');
+                //     $('#draggable_neucleotide_'+id).hide();
+                // }
 
-                $(".templateStrandWrap").eq(10).append(SimpleClone($(this)).addClass("mRNA_string"));  // Append the cloned draggable to dropzone
-                $(this).remove();                                               // Remove the original draggable
+
+                $(".templateStrandWrap").eq(10).append(SimpleClone($(this)).addClass("mRNA_string"));   // Append the cloned draggable to dropzone
+                // $(this).remove();        // Remove the original draggable.  // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+                $(this).hide();             // Hides the original draggable, which is shown again in MARK (#5#)   // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
 
                 $(".templateStrandWrap:eq(10) .mRNA_string").removeAttr('style id');  // Remove all inline style AND the id!!!
 
                 anmateDnaMovement();
                 
-            }
-            else {
+            } else {
                 console.log("Dropped in a invalid location - FALIURE");
                 // console.log("Dropped in a invalid location - valid: " + JSON.stringify(valid));
                 // error_sound();
@@ -410,7 +507,9 @@ function setEventhandlers(){
             console.log('valid - giveFeedback - END');  // MARK (#1#)
             
             // return !valid;
-            return false;  // returning "false" prevents revert from happening (eventhough the "revert"-event is called).
+            return false;  // returning "false" prevents revert from happening (eventhough the "revert"-event is called).  // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
+
+            // return true; // Added  30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
         },
         start: function(event, ui) {
             console.log('card - START');
@@ -422,6 +521,7 @@ function setEventhandlers(){
             console.log('start - baseClass: ' + baseClass);
 
             dObj.isCurrentDraggableCorrect = (baseClass.indexOf('correct_mRNA') !== -1)? true : false;
+            console.log('start - dObj: ' + JSON.stringify(dObj));
 
             for (var n in bioObj.mRNA){
                 if (baseClass.indexOf(bioObj.mRNA[n].name.toLowerCase()) !== -1){
@@ -471,6 +571,11 @@ function setEventhandlers(){
             // if ($('#cardPile .card').length == 0) {
             //     console.log('step_2_template - INIT');
             //     step_2_template();
+            // }
+
+            // if (dObj.isCurrentDraggableCorrect){   // <---------  THIS DOES NOT WORK!!!!
+            //     console.log('isCurrentDraggableCorrect: '+dObj.isCurrentDraggableCorrect+' - SHOW');
+            //     $('#draggable_neucleotide_'+id).show();
             // }
 
         },
@@ -559,6 +664,8 @@ function setEventhandlers(){
 
         if (dObj.wrongFeedbackTriggered){
 
+            console.log('.MsgBox_bgr - CLICKED - wrongFeedbackTriggered');
+
             // This makes the neucleotide move again after failed attempt to drag:
             dObj.moveObjArr[dObj.idOfWronglyMovedNeucleotide].brownianMotion = true;
             brownianMotion3(dObj.idOfWronglyMovedNeucleotide, dObj.duration, dObj.length);  // UNCOMMENT 24-10-2016
@@ -577,6 +684,7 @@ function setEventhandlers(){
             dObj.wrongFeedbackTriggered = false;
         }
     });
+
 }
 
 
@@ -598,9 +706,10 @@ function initTransription(){
     dObj.dnaArr = jsonData.codingStrand.split('');
     console.log('initTransription - dnaArr: ' + dObj.dnaArr);
 
-    
+    $('#transcriptionContainer').html('');  // Clear all content in the event the user wants to try again.
 
     var HTML = '';
+    HTML += '<img class="backgroundImg img-responsive" src="img/ellipse.png">';
     HTML += '<div class="fadeOut fadeOut_left"></div>';
     HTML += '<div id="dropZone"></div>';
     // for (var n in dObj.dnaArr){
@@ -677,9 +786,9 @@ function randomlySpacedVec(){
     
     return {x:dObj.vecObj.x, y:dObj.vecObj.y};
 }
-console.log('randomlySpacedVec 1: ' + randomlySpacedVec());
-console.log('randomlySpacedVec 2: ' + randomlySpacedVec());
-console.log('randomlySpacedVec 3: ' + randomlySpacedVec());
+// console.log('randomlySpacedVec 1: ' + randomlySpacedVec());
+// console.log('randomlySpacedVec 2: ' + randomlySpacedVec());
+// console.log('randomlySpacedVec 3: ' + randomlySpacedVec());
 
 
 
@@ -688,6 +797,12 @@ function addDraggableNeucleotides(){
 
     var count = 0;
     var HTML = '';
+    for (var n in bioObj.mRNA){
+        console.log('addDraggableNeucleotides - n: ' + n);
+        // HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'"><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        ++count;
+    }
     for (var n in bioObj.mRNA){
         console.log('addDraggableNeucleotides - n: ' + n);
         // HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
@@ -725,10 +840,10 @@ function addDraggableNeucleotides(){
 
         dObj.moveObjArr[i].animationInfo.angel += 45*(Math.random()-0.5);
 
-        $('#draggable_neucleotide_'+i).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
-                '-moz-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
-                '-webkit-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
-                'transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)' 
+        $('#draggable_neucleotide_'+i).css({                                       
+            '-moz-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+            '-webkit-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+            'transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)' 
         });
     };
 
@@ -736,8 +851,61 @@ function addDraggableNeucleotides(){
 }
 
 
-function addDraggableNeucleotides2(){
+// NOTE: 
+function movePriviousCorrectNeucleotideBackToOriginalPosition(){
 
+    console.log('movePriviousCorrectNeucleotideBackToOriginalPosition - CALLED');
+
+    var id = dObj.idOfLastMovedNeucleotide;
+
+    // $('#draggable_neucleotide_'+id).remove(); // Remove the original 
+
+    console.log('movePriviousCorrectNeucleotideBackToOriginalPosition - dObj.isCurrentDraggableCorrect: ' + dObj.isCurrentDraggableCorrect);
+
+    if (dObj.isCurrentDraggableCorrect){
+        // var HTML = '';
+        // var nClass = $('#draggable_neucleotide_'+dObj.idOfLastMovedNeucleotide).prop('class');
+        // for (var n in bioObj.mRNA){
+        //     if (nClass.indexOf(bioObj.mRNA[n].class)!==-1) {
+        //         HTML += '<div id="draggable_neucleotide_'+id+'" class="neucleotide draggable_neucleotide '+bioObj.mRNA[n].class+'"><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        //         break;
+        //     }
+        // }
+    
+
+        // $('#transcriptionContainer').append(HTML);
+
+        dObj.moveObjArr[id].brownianMotion = true;
+
+        $('#draggable_neucleotide_'+id).css({position: 'absolute',top: String(dObj.moveObjArr[id].y)+'%', left: String(dObj.moveObjArr[id].x)+'%'});
+
+        $('#draggable_neucleotide_'+id).css({                                         
+            '-moz-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            '-webkit-transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)',
+            'transform': 'rotate('+dObj.moveObjArr[id].animationInfo.angel+'deg)' 
+        });
+
+        $('#draggable_neucleotide_'+id).fadeIn();  // FadeIn the draggable neucleotide, which were hidden in MARK (#5#)
+    }
+}
+
+
+function insertCorrectDraggableClasses(){
+
+    var lookUp = {"U":"Uracil", "T":"Thymin", "G":"Guanin", "C":"Cytosin", "A":"Adenin" };
+
+    // console.log('insertCorrectDraggableClasses - correctmRnaNucleotide(): ' + correctmRnaNucleotide() + ', lookUp[correctmRnaNucleotide()]: ' + lookUp[correctmRnaNucleotide()].toLowerCase());
+
+    $( ".draggable_neucleotide" ).each(function( index, element ) {
+        if ($(element).prop('class').indexOf(lookUp[correctmRnaNucleotide()].toLowerCase())!==-1){
+            console.log('insertCorrectDraggableClasses - TRUE 1 - class: ' + $(element).prop('class'));
+            $(element).addClass('correct_mRNA');
+            console.log('insertCorrectDraggableClasses - TRUE 2 - class: ' + $(element).prop('class'));
+        } else {
+            console.log('insertCorrectDraggableClasses - FALSE - class: ' + $(element).prop('class'));
+            $(element).removeClass('correct_mRNA');
+        }
+    });
 }
 
 
@@ -747,26 +915,16 @@ function ajustScreenHight(){
 }
 
 
+function main(){
 
+    init_dObj();
 
-//=======================================================================================
-//                  Run code
-//=======================================================================================
-
-
-$(window).on('resize', function() {
-    ajustScreenHight();
-
-    getHeightOfDnaNucleotides();
-});
-
-$(document).ready(function() {
     // getAjaxData("GET", "json/quizData.json", false, "json"); 
     // console.log("jsonData: " + JSON.stringify(jsonData));
 
-    $('#header').prepend(jsonData.header);
-    $('#instruction').prepend(instruction(jsonData.instruction));  
-    $('#explanation').prepend(explanation(jsonData.explanation));
+    $('#header').html(jsonData.header);
+    $('#instruction').html(instruction(jsonData.instruction));  
+    $('#explanation').html(explanation(jsonData.explanation));
 
     basicPosCalc();
 
@@ -782,6 +940,26 @@ $(document).ready(function() {
     getHeightOfDnaNucleotides();
 
     brownianMotionInit();
+}
+
+
+
+//=======================================================================================
+//                  Run code
+//=======================================================================================
+
+
+$(window).on('resize', function() {
+    ajustScreenHight();
+
+    getHeightOfDnaNucleotides();
+});
+
+$(document).ready(function() {
+
+    main();
     
+    // var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Ønsker du at prøve igen? <br><br> Tryk "Ja" hvis du ønsker at prøve igen, ellers tryk "Nej" for at gå videre og se den afsluttede video.';
+    // UserMsgBox_mod(msg, true, callbackIf_yes, callbackIf_no);
 });
 

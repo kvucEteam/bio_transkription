@@ -120,7 +120,7 @@
 	/*border: 1px solid #F00;*/
 }
 .templateStrand.thymin{
-	position: absolute;
+	/*position: absolute;*/
 	top: 39.3%
 }
 
@@ -129,11 +129,11 @@
 }
 
 .templateStrand.guanin{
-	position: absolute;
+	/*position: absolute;*/
 	top: 47.8%;
 }
 .templateStrand.adenin{
-	position: absolute;
+	/*position: absolute;*/
 	top: 47.0%;
 }
 
@@ -143,23 +143,39 @@
 }
 
 .mRNA_string.uracil{
+/*
 	position: absolute;
 	left: 1%;
 	top: -7.5%;
+*/	
+	margin-left: -1%;
+    margin-top: -80.7%;
 }
 
 .mRNA_string.cytosin{
+/*
 	position: absolute;
 	top: -7.5%;
+*/	
+	margin-top: -80.7%;
+    margin-left: -4%;
 }
 
 .mRNA_string.guanin{
+/*
 	position: absolute;
 	top: -7.5%;
+*/	
+	margin-top: -80.7%;
+    margin-left: -1%;
 }
 .mRNA_string.adenin{
+/*	
 	position: absolute;
 	top: -7.7%;
+*/
+	margin-top: -80.7%;
+    margin-left: -4%;
 }
 
 .neucleotide {
