@@ -308,7 +308,15 @@ callbackIf_yes = function(){
 
 
 callbackIf_no = function(){
-   
+
+    var HTML = '';
+    HTML += '<div class="col-sm-12 col-md-12 video_container">';
+    HTML +=     '<div class="embed-responsive embed-responsive-16by9 col-xs-12 col-md-12 vid_container">';
+    HTML +=         '<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/P51rweOU9kg?rel=0" allowfullscreen="1"></iframe>';
+    HTML +=     '</div>';
+    HTML += '</div>';
+
+    UserMsgBox("body", HTML);
 }
 
 
