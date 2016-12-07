@@ -90,93 +90,96 @@ function brownianMotionInit(){
 // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duration:null}});
 function brownianMotion3(n, duration, length){
 
-    if (dObj.moveObjArr[n].brownianMotion){
+    if (!detectmob()){  // This solves the scroll-to-top problem of JQuery animate.
 
-        // console.log('brownianMotion3 - counter: ' + counter);
-        // ++counter;
+        if (dObj.moveObjArr[n].brownianMotion){
 
-        dObj.moveObjArr[n].animationInfo.duration = duration*Math.random() + 300;  // <------ Random instad?
+            // console.log('brownianMotion3 - counter: ' + counter);
+            // ++counter;
 
-        var vec = randVec(length);
-        dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
-        dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
-        console.log('brownianMotion3 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
+            dObj.moveObjArr[n].animationInfo.duration = duration*Math.random() + 300;  // <------ Random instad?
 
-        var randDeg = Math.round(180*(Math.random()-0.5));
+            var vec = randVec(length);
+            dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
+            dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
+            console.log('brownianMotion3 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
 
-        $( '#draggable_neucleotide_'+n ).animate({
-                left: dObj.moveObjArr[n].animationInfo.x,
-                top: dObj.moveObjArr[n].animationInfo.y,
-                // step: function(now) {  // http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
-                //     console.log('brownianMotion2 - STEP');
-                //     $(this).css({
-                //         transform: 'rotate(' + String(now + 180*(Math.random()-0.5)) + 'deg)'
-                //     });
-                // }
+            var randDeg = Math.round(180*(Math.random()-0.5));
 
-                // rotate: String(Math.round(180*(Math.random()-0.5)))+'deg'
+            $( '#draggable_neucleotide_'+n ).animate({
+                    left: dObj.moveObjArr[n].animationInfo.x,
+                    top: dObj.moveObjArr[n].animationInfo.y,
+                    // step: function(now) {  // http://stackoverflow.com/questions/15191058/css-rotation-cross-browser-with-jquery-animate
+                    //     console.log('brownianMotion2 - STEP');
+                    //     $(this).css({
+                    //         transform: 'rotate(' + String(now + 180*(Math.random()-0.5)) + 'deg)'
+                    //     });
+                    // }
 
-                duration: dObj.moveObjArr[n].animationInfo.duration
+                    // rotate: String(Math.round(180*(Math.random()-0.5)))+'deg'
 
-                
-                // step: function(){
-                //     var randDeg = Math.round(180*(Math.random()-0.5));
-                //     $('#draggable_neucleotide_'+n).animate(
-                //         {rotation: 360},
-                //         {
-                //             // duration: 'slow',
-                //             duration: 2*dObj.moveObjArr[n].animationInfo.duration,
-                //             step: function(now, fx) {
-                //                 $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
-                //             }
-                //         }
-                //     );
-                // }
+                    duration: dObj.moveObjArr[n].animationInfo.duration
 
-            },
-            function() {  // Animation complete.
-                dObj.moveObjArr[n].animationInfo.angel += 5*((Math.random()-0.5)>0)?1:-1;
+                    
+                    // step: function(){
+                    //     var randDeg = Math.round(180*(Math.random()-0.5));
+                    //     $('#draggable_neucleotide_'+n).animate(
+                    //         {rotation: 360},
+                    //         {
+                    //             // duration: 'slow',
+                    //             duration: 2*dObj.moveObjArr[n].animationInfo.duration,
+                    //             step: function(now, fx) {
+                    //                 $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+                    //             }
+                    //         }
+                    //     );
+                    // }
 
-                $( this ).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
-                        '-moz-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
-                        '-webkit-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
-                        'transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)' 
-                });
+                },
+                function() {  // Animation complete.
+                    dObj.moveObjArr[n].animationInfo.angel += 5*((Math.random()-0.5)>0)?1:-1;
 
-                // $('#draggable_neucleotide_'+n).animate(                // <---- Virker godt knap så godt med animate i x og y
-                //     {rotation: 360},
-                //     {
-                //         // duration: 'slow',
-                //         duration: 2*dObj.moveObjArr[n].animationInfo.duration,
-                //         step: function(now, fx) {
-                //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
-                //         }
-                //     }
-                // );
-                console.log('brownianMotion3 - ANIMATION COMPLETE');
-                brownianMotion3(n, duration, length);  // UNCOMMENT 24-10-2016
-            }
-        );
+                    $( this ).css({                                         // <---- Virker godt med animate i x og y, men er ser ud som det hakker
+                            '-moz-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
+                            '-webkit-transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)',
+                            'transform': 'rotate('+dObj.moveObjArr[n].animationInfo.angel+'deg)' 
+                    });
 
-        // setInterval(function(){ 
-        //     var randDeg = Math.round(180*(Math.random()-0.5));
-        //     $('#draggable_neucleotide_'+n).css({                                         
-        //             '-moz-transform': 'rotate('+randDeg+'deg)',
-        //             '-webkit-transform': 'rotate('+randDeg+'deg)',
-        //             'transform': 'rotate('+randDeg+'deg)' 
-        //     });
-        // }, 1000);
+                    // $('#draggable_neucleotide_'+n).animate(                // <---- Virker godt knap så godt med animate i x og y
+                    //     {rotation: 360},
+                    //     {
+                    //         // duration: 'slow',
+                    //         duration: 2*dObj.moveObjArr[n].animationInfo.duration,
+                    //         step: function(now, fx) {
+                    //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+                    //         }
+                    //     }
+                    // );
+                    console.log('brownianMotion3 - ANIMATION COMPLETE');
+                    brownianMotion3(n, duration, length);  // UNCOMMENT 24-10-2016
+                }
+            );
 
-        // $('#draggable_neucleotide_'+n).animate(              
-        //     {rotation: 360},
-        //     {
-        //         // duration: 'slow',
-        //         duration: 2*dObj.moveObjArr[n].animationInfo.duration,
-        //         step: function(now, fx) {
-        //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
-        //         }
-        //     }
-        // );
+            // setInterval(function(){ 
+            //     var randDeg = Math.round(180*(Math.random()-0.5));
+            //     $('#draggable_neucleotide_'+n).css({                                         
+            //             '-moz-transform': 'rotate('+randDeg+'deg)',
+            //             '-webkit-transform': 'rotate('+randDeg+'deg)',
+            //             'transform': 'rotate('+randDeg+'deg)' 
+            //     });
+            // }, 1000);
+
+            // $('#draggable_neucleotide_'+n).animate(              
+            //     {rotation: 360},
+            //     {
+            //         // duration: 'slow',
+            //         duration: 2*dObj.moveObjArr[n].animationInfo.duration,
+            //         step: function(now, fx) {
+            //             $('#draggable_neucleotide_'+n).css({"transform": "rotate("+randDeg+"deg)"});
+            //         }
+            //     }
+            // );
+        }
     }
 }
 
@@ -947,7 +950,7 @@ function main(){
 
     getHeightOfDnaNucleotides();
 
-    brownianMotionInit();
+    brownianMotionInit();   // if (!detectmob()){
 }
 
 
