@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml lang=en>
+
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Transkription</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../library/css/styles.css" type="text/css">
+    <link rel="stylesheet" href="transkription2.css" type="text/css">
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        <h1 id="header"></h1>
+        <div id="instruction"></div>
+        <div id="explanation"></div>
+        <div class="Clear"></div>
+        <div id="transcriptionContainer" class="">
+<!-- 
+            <img class="backgroundImg img-responsive" src="img/ellipse.png">
+  -->           
+        </div>
+        <div id="cords">
+            absMouseCord (x: <span id="xCord_abs"></span> , y: <span id="yCord_abs"></span>) <br> 
+            relMouseCord (x: <span id="xCord_rel"></span> , y: <span id="yCord_rel"></span>) <br>
+            #transcriptionContainer: pos (left: <span id="xPos"></span> , top: <span id="yPos"></span>), offset (left: <span id="xOffset"></span> , top: <span id="yOffset"></span>) 
+        </div>
+    </div>
+    <script src="../library/vendor_scripts.js"></script>
+    <script src="../library/custom_scripts.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            getAjaxData("GET", "json/quizData2.json", false, "json"); 
+            console.log("jsonData: " + JSON.stringify(jsonData));
+        });
+    </script>
+    
+    <script type="text/javascript" src="transkription2.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            one_line_footer();
+        });
+    </script>
+</body>
+
+</html>

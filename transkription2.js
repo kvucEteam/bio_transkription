@@ -19,16 +19,16 @@
 
 var bioObj = {
         dna : { 
-            A : {name:"Adenin", class:"adenin DNA", src: {codingStrand: 'ao.png', templateStrand: 'an.png'} },
-            C : {name:"Cytosin",class:"cytosin DNA", src: {codingStrand: 'co.png', templateStrand: 'cn.png'} },
-            G : {name:"Guanin", class:"guanin DNA", src: {codingStrand: 'go.png', templateStrand: 'gn.png'} },
-            T : {name:"Thymin", class:"thymin DNA", src: {codingStrand: 'to.png', templateStrand: 'tn.png'} }
+            A : {name:"Adenin", class:"adenin DNA", src: {codingStrand: 'hard/aoh.png', templateStrand: 'hard/anh.png'} },
+            C : {name:"Cytosin",class:"cytosin DNA", src: {codingStrand: 'hard/coh.png', templateStrand: 'hard/cnh.png'} },
+            G : {name:"Guanin", class:"guanin DNA", src: {codingStrand: 'hard/goh.png', templateStrand: 'hard/gnh.png'} },
+            T : {name:"Thymin", class:"thymin DNA", src: {codingStrand: 'hard/toh.png', templateStrand: 'hard/tnh.png'} }
         },
         mRNA : { 
-            A : {name:"Adenin", class:"adenin mRNA", src:"am.png"},
-            C : {name:"Cytosin",class:"cytosin mRNA", src:"cm.png"},
-            G : {name:"Guanin", class:"guanin mRNA", src:"gm.png"},
-            U : {name:"Uracil", class:"uracil mRNA", src:"um.png"}
+            A : {name:"Adenin", class:"adenin mRNA", src:"hard/amh.png"},
+            C : {name:"Cytosin",class:"cytosin mRNA", src:"hard/cmh.png"},
+            G : {name:"Guanin", class:"guanin mRNA", src:"hard/gmh.png"},
+            U : {name:"Uracil", class:"uracil mRNA", src:"hard/umh.png"}
         }
 }
 
