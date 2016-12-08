@@ -4,7 +4,8 @@
 	"explanation" : "Et gen er et stykke DNA, som koder for et protein. Koden består af en rækkefølge af de fire nukleotider, som DNA er opbygget af. Når et gen skal oversættes til protein, starter cellen med at lave en slags arbejdskopi af genet. Denne kopi kaldes messenger-RNA, og processen kaldes transskription. Dette stykke RNA bringer “budskabet” om rækkefølgen af nukleotider fra cellekernen ud til ribosomerne i cytoplasma.",
 	"codingStrand_BACKUP": "ACTGGACTACTGGACTGACT",
 	"codingStrand_old": "CACTGGCTACACACAATGTGCGACGAAGAC",
-	"codingStrand": "CACTGGCTACATGTCCCTACTGAGTCTAATACGAAAACTAATCTATTGAGACCACCGC",
+	"codingStrand": "CACTGGCTACACACAATGTGCGACGAAGACGAGACCACC",
+	"codingStrand_aktin" : "ACACAATGTGCGACGAAGAC",
 	"codingStrand_hvepsegift" : "ATGTCCCTACTGAGTCTAATACGAAAACTAATCTATTGA",
 	"codingStrand_real_complete": "ACACAATGTGCGACGAAGAC",
 	"codingStrand_real_complete": "ACACAATGTGCGACGAAGACGAGACCACCGCCCTCGTGTGCGACAATGGCTCCGGCCTGGTGAAAGCCGGCTTCGCCGGGGATGACGCCCCTAGGGCCGTGTTCCCGTCCATCGTGGGCCGCCCCCGACACCAGGGCGTCATGGTCGGTATGGGTCAGAAAGATTCCTACGTGGGCGACGAGGCTCAGAGCAAGAGAGGTATCCTGACCCTGAAGTACCCTATCGAGCACGGCATCATCACCAACTGGGA"
