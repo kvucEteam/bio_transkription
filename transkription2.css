@@ -193,3 +193,90 @@
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */      
 }
+
+
+/***************************************************************************************************************************************   
+														LABELS IN START OVERLAY   
+****************************************************************************************************************************************/
+
+
+.neucleotide_label {
+	position: absolute;
+	left: 80%;
+	top: 30%;
+}
+
+.codingStrand_label{
+	position: absolute;
+	left: 80%;
+	top: -30%;
+	z-index: 2;
+}
+
+.codingStrand_label{
+	position: absolute;
+	left: 80%;
+	top: -23%;
+	z-index: 2;
+}
+
+.templateStrand_label{
+	position: absolute;
+	left: 80%;
+	top: 220%;
+	z-index: 2;
+}
+
+#dropzone_label{
+	position: absolute;
+	left: 80%;
+	top: 10%;
+	z-index: 2;
+}
+
+#rnaPolymerase_label{
+	position: absolute;
+	right: 30%;
+	bottom: 10%;
+	z-index: 2;
+}
+
+#startBtn{
+	position: absolute;
+	right: 2%;
+	bottom: 5%;
+	z-index: 11;
+	border: 1px solid #56bfc5;
+}
+
+#startBtn:hover {
+	border: 1px solid #e7e6e2;
+}
+
+
+/***************************************************************************************************************************************   
+															MEDIA QUERIES   
+****************************************************************************************************************************************/
+
+
+@media all and (max-width: 1170px) {
+    .start_label {
+        font-size: 1.3vw;
+        color: #000;
+    }
+
+    #startBtn{
+    	font-size: 1.5vw;
+    }
+}
+
+@media all and (min-width: 1171px) {
+    .start_label {
+        font-size: 14px;
+        color: #000;
+    }
+
+    #startBtn{
+    	font-size: 20px;
+    }
+}

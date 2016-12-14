@@ -926,6 +926,125 @@ function ajustScreenHight(){
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function addDraggableNeucleotides(){
+    $('.draggable_neucleotide').remove(); // Remove previous neucleotides...
+
+    var count = 0;
+    var HTML = '';
+    for (var n in bioObj.mRNA){
+        console.log('addDraggableNeucleotides - n: ' + n);
+        // HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'"><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        ++count;
+    }
+    for (var n in bioObj.mRNA){
+        console.log('addDraggableNeucleotides - n: ' + n);
+        // HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'">'+n+'</div>';
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide '+((n==correctmRnaNucleotide())?'correct_mRNA':'')+' '+bioObj.mRNA[n].class+'"><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        ++count;
+    }
+    $('#transcriptionContainer').append(HTML);
+
+    console.log('addDraggableNeucleotides - count: ' + count);
+
+    dObj.moveObjArr = [];
+    for (var i = 0; i < count; i++) {
+        // var x = Math.round(Math.random()*90 + 5);
+        // var y = Math.round(Math.random()*15);
+
+        // var x = Math.round(Math.random()*90 + 5);  // <----- OK! 28-10-2016
+        // var y = Math.round(Math.random()*10 + 5);  // <----- OK! 28-10-2016
+
+        var Tvec = randomlySpacedVec();
+        var x = Tvec.x;
+        var y = Tvec.y;
+        if (Math.random() <= 0.5){
+            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+        } else {
+            y = y + 70;
+            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+        }
+    
+        // var width = $('#draggable_neucleotide_'+i).width();
+        // var height = $('#draggable_neucleotide_'+i).height();
+
+        // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, angle:0, brownianMotion:true});
+        dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, width:'5%', height:'10%', brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duration:null}});
+
+
+        dObj.moveObjArr[i].animationInfo.angel += 45*(Math.random()-0.5);
+
+        $('#draggable_neucleotide_'+i).css({                                       
+            '-moz-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+            '-webkit-transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)',
+            'transform': 'rotate('+dObj.moveObjArr[i].animationInfo.angel+'deg)' 
+        });
+    };
+
+    console.log('addDraggableNeucleotides - dObj.moveObjArr: ' + JSON.stringify(dObj.moveObjArr));
+}
+
+
+
+function makeStartOverlay() {
+
+    init_dObj();
+
+    $('#header').html(jsonData.header);
+    $('#instruction').html(instruction(jsonData.instruction));  
+    $('#explanation').html(explanation(jsonData.explanation));
+
+    basicPosCalc();
+
+    $('#transcriptionContainer').append(initTransription());
+
+    var count = 0;
+    var HTML = '';
+    // HTML += '<div id="overlayStart">';
+    for (var n in bioObj.mRNA){
+        console.log('makeStartOverlay - n: ' + n);
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide neucleotide_with_label'+bioObj.mRNA[n].class+'"><div class="start_label neucleotide_label label label-default">'+bioObj.mRNA[n].name+'</div><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        ++count;
+    }
+    // HTML += '</div>';
+
+    $('#transcriptionContainer').append(HTML);
+
+    var x = 0;
+    dObj.moveObjArr = [];
+    for (var i = 0; i < count; i++) {
+        x = 20*(i+1) - 5;
+        $('#draggable_neucleotide_'+i).css({position: 'absolute',top: '10%', left: String(x)+'%'});
+        
+    };
+
+    $('.basePairWrap:eq(1) .codingStrand').prepend('<div class="codingStrand_label start_label label label-default">Kodende streng</div>');
+    $('.basePairWrap:eq(1) .templateStrand').prepend('<div class="templateStrand_label start_label label label-default">Skabelonstreng</div>');
+
+    $('#dropZone').prepend('<div id="dropzone_label" class="start_label label label-default">Det aktive center</div>');
+
+    $('#transcriptionContainer').prepend('<div id="rnaPolymerase_label" class="start_label label label-default">RNA polymerase</div>');
+
+    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-info vuc-primary">START</div>');
+
+    ajustScreenHight();
+
+    getHeightOfDnaNucleotides();
+
+
+    $(document).on('click', "#startBtn", function(event) {
+        $('#transcriptionContainer').html(''); // Clear all content.
+        main();
+        $('.draggable_neucleotide').hide().fadeIn();
+    });
+}
+
+
 function main(){
 
     init_dObj();
@@ -950,7 +1069,7 @@ function main(){
 
     getHeightOfDnaNucleotides();
 
-    brownianMotionInit();   // if (!detectmob()){
+    brownianMotionInit();  
 }
 
 
@@ -968,9 +1087,9 @@ $(window).on('resize', function() {
 
 $(document).ready(function() {
 
-    main();
+    // main();  // Commented out 13-12-2016.
+
+    makeStartOverlay();  // Added 13-12-2016. <---------------- main() is called here!
     
-    // var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Ønsker du at prøve igen? <br><br> Tryk "Ja" hvis du ønsker at prøve igen, ellers tryk "Nej" for at gå videre og se den afsluttede video.';
-    // UserMsgBox_mod(msg, true, callbackIf_yes, callbackIf_no);
 });
 

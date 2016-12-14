@@ -954,6 +954,61 @@ function main(){
 }
 
 
+function makeStartOverlay() {
+
+    init_dObj();
+
+    $('#header').html(jsonData.header);
+    $('#instruction').html(instruction(jsonData.instruction));  
+    $('#explanation').html(explanation(jsonData.explanation));
+
+    basicPosCalc();
+
+    $('#transcriptionContainer').append(initTransription());
+
+    var count = 0;
+    var HTML = '';
+    // HTML += '<div id="overlayStart">';
+    for (var n in bioObj.mRNA){
+        console.log('makeStartOverlay - n: ' + n);
+        HTML += '<div id="draggable_neucleotide_'+count+'" class="neucleotide draggable_neucleotide neucleotide_with_label'+bioObj.mRNA[n].class+'"><div class="start_label neucleotide_label label label-default">'+bioObj.mRNA[n].name+'</div><img class="img-responsive" src="img/'+bioObj.mRNA[n].src+'"></div>';
+        ++count;
+    }
+    // HTML += '</div>';
+
+    $('#transcriptionContainer').append(HTML);
+
+    var x = 0;
+    dObj.moveObjArr = [];
+    for (var i = 0; i < count; i++) {
+        x = 20*(i+1) - 5;
+        $('#draggable_neucleotide_'+i).css({position: 'absolute',top: '10%', left: String(x)+'%'});
+        
+    };
+
+    $('.basePairWrap:eq(1) .codingStrand').prepend('<div class="codingStrand_label start_label label label-default">Kodende streng</div>');
+    $('.basePairWrap:eq(1) .templateStrand').prepend('<div class="templateStrand_label start_label label label-default">Skabelonstreng</div>');
+
+    $('#dropZone').prepend('<div id="dropzone_label" class="start_label label label-default">Det aktive center</div>');
+
+    $('#transcriptionContainer').prepend('<div id="rnaPolymerase_label" class="start_label label label-default">RNA polymerase</div>');
+
+    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-info vuc-primary">START</div>');
+
+    ajustScreenHight();
+
+    getHeightOfDnaNucleotides();
+
+
+    $(document).on('click', "#startBtn", function(event) {
+        $('#transcriptionContainer').html(''); // Clear all content.
+        main();
+        $('.draggable_neucleotide').hide().fadeIn();
+    });
+}
+
+
+
 
 //=======================================================================================
 //                  Run code
@@ -968,7 +1023,9 @@ $(window).on('resize', function() {
 
 $(document).ready(function() {
 
-    main();
+    // main();  // Commented out 13-12-2016.
+
+    makeStartOverlay();  // Added 13-12-2016. <---------------- main() is called here!
     
     // var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Ønsker du at prøve igen? <br><br> Tryk "Ja" hvis du ønsker at prøve igen, ellers tryk "Nej" for at gå videre og se den afsluttede video.';
     // UserMsgBox_mod(msg, true, callbackIf_yes, callbackIf_no);
