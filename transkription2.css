@@ -262,7 +262,8 @@
 @media all and (max-width: 1170px) {
     .start_label {
         font-size: 1.3vw;
-        color: #000;
+        color: #333;
+        font-weight: 400;
     }
 
     #startBtn{
@@ -273,7 +274,8 @@
 @media all and (min-width: 1171px) {
     .start_label {
         font-size: 14px;
-        color: #000;
+        color: #333;
+        font-weight: 400;
     }
 
     #startBtn{

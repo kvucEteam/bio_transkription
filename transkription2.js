@@ -1026,7 +1026,7 @@ function makeStartOverlay() {
     $('.basePairWrap:eq(1) .codingStrand').prepend('<div class="codingStrand_label start_label label label-default">Kodende streng</div>');
     $('.basePairWrap:eq(1) .templateStrand').prepend('<div class="templateStrand_label start_label label label-default">Skabelonstreng</div>');
 
-    $('#dropZone').prepend('<div id="dropzone_label" class="start_label label label-default">Det aktive center</div>');
+    $('#dropZone').prepend('<div id="dropzone_label" class="start_label label label-default">Enzymets aktive center</div>');
 
     $('#transcriptionContainer').prepend('<div id="rnaPolymerase_label" class="start_label label label-default">RNA polymerase</div>');
 
