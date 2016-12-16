@@ -246,11 +246,6 @@
 	right: 2%;
 	bottom: 5%;
 	z-index: 11;
-	border: 1px solid #56bfc5;
-}
-
-#startBtn:hover {
-	border: 1px solid #e7e6e2;
 }
 
 

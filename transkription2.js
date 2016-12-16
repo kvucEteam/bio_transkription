@@ -1030,7 +1030,7 @@ function makeStartOverlay() {
 
     $('#transcriptionContainer').prepend('<div id="rnaPolymerase_label" class="start_label label label-default">RNA polymerase</div>');
 
-    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-info vuc-primary">START</div>');
+    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-primary">START</div>');
 
     ajustScreenHight();
 
