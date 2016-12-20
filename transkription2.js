@@ -997,6 +997,7 @@ function makeStartOverlay() {
 
     $('#header').html(jsonData.header);
     $('#instruction').html(instruction(jsonData.instruction));  
+    // $('#instruction').html(instruction('Syntetisér dit eget mRNA: Tryk på start, find det rigtige RNA-nukleotid og træk det hen til den markerede plads.')); 
     $('#explanation').html(explanation(jsonData.explanation));
 
     basicPosCalc();
