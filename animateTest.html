@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>animate demo</title>
+  <style>
+  div.block {
+    position: absolute;
+    background-color: #abc;
+    left: 50px;
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+  }
+
+  .textContainer{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 640px;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div class="textContainer">
+      <h1>Animate test</h1>
+      <p>
+          <b>Animate fungerer ikke ved angivelse i "%" (på mobil og tablet) selv om der står på http://api.jquery.com/animate/ at "%" kan anvendes: 
+              <br><br> <i>"The units em and % can be specified where applicable."</i><br><br>
+             Se forskellen på mobil ved at køre de to animationer i bunden af denne side. NB: siden er lang (meget tekst) for at fremprovokere "jitter"-fejl på mobil.
+          </b>
+      </p>
+      <p>
+      Lorem ipsum dolor sit amet, tristique lobortis lorem dui nisl ultricies, nec vestibulum id tortor quis et vel, tempus diam accumsan. Nunc sed eu, ligula consequat integer wisi hendrerit egestas, dui sit aliquam nibh sit. Semper aenean convallis pulvinar elit dui tempus, etiam purus fringilla non, quisque neque, dui sit eleifend. Pede fermentum in, orci eget eu amet, lacinia qui consequat lectus soluta tortor non, egestas mauris, feugiat ipsum eros sit. Arcu sed, proin mi parturient tellus fusce augue odio, dictum dolor sed justo pellentesque, nulla amet pede ornare lorem, nulla erat sagittis ut lacus in pretium. In velit, at magna magna, ultricies risus laoreet amet, velit nascetur eget id magna aliquet etiam.
+      </p>
+      <p>
+      Sollicitudin tincidunt vestibulum nibh aptent vivamus, et et velit in, tincidunt in egestas, et orci turpis, nulla vivamus vestibulum arcu et. A risus porttitor posuere aliquam, volutpat non turpis sollicitudin. Quia vestibulum tincidunt egestas. Dui tristique nec lacus, bibendum nam primis a in nec, sed placerat nihil sit, amet laoreet amet varius. Dui pellentesque nunc, eu rhoncus sapien laoreet gravida ac turpis, non elit in. Aliquam augue purus, integer quisque, cras dictumst libero nibh, maecenas ante. Est erat pellentesque, voluptatem faucibus in pellentesque quisque quis, orci sodales in nam lacinia posuere nec, adipiscing viverra convallis id scelerisque interdum ornare.
+      </p>
+      <p>
+      Orci ut vitae, ultricies suspendisse tristique luctus elit, enim nulla phasellus nulla lacus, viverra viverra rutrum adipiscing. Sed suspendisse, risus vitae commodo neque, sed est volutpat semper a libero, corrupti non. Nec proin rhoncus, quis malesuada nullam gravida etiam dui, nulla adipiscing enim wisi ornare molestias lacus. Ultricies ab ipsum eget proin, aenean erat tincidunt enim fuga molestie sed, rhoncus suspendisse neque, phasellus curabitur pede, eleifend convallis sit a. Commodo id duis ipsum et urna lacus, id elit velit justo lorem libero, bibendum mauris dapibus cras leo gravida. Ut libero porttitor sem suspendisse ac id, porttitor suspendisse ligula et justo libero, eu et libero.
+      </p>
+      <p>
+      Malesuada nec velit, nibh rutrum lacus sodales id vestibulum, sem sed id odio aenean eget. Aliquam vestibulum dolor aliquam odio, porttitor urna urna scelerisque accumsan, etiam eget sit nulla facilisi. Velit turpis varius turpis, proin non ac quis ipsum suspendisse, pede leo platea luctus. Ut id sociosqu maecenas mauris. Vitae volutpat. Hac orci corporis non ultricies tempor, lacus metus natoque at. Molestie amet, malesuada sit. Faucibus in sodales vestibulum velit.
+      </p>
+
+      <button id="left">&laquo;</button>
+      <button id="right">&raquo;</button>
+      <button id="animate1">ANIMATE px</button>
+      <button id="animate2">ANIMATE %</button>
+      <div class="block"></div>
+</div>
+
+
+ 
+<script type="text/javascript">
+
+    $( "#right" ).click(function() {
+      $( ".block" ).animate({ "left": "+=50px" }, "slow" );
+    });
+     
+    $( "#left" ).click(function(){
+      $( ".block" ).animate({ "left": "-=50px" }, "slow" );
+    });
+
+    $( "#animate1" ).click(function(){
+        animate_abs1();
+    });
+
+    $( "#animate2" ).click(function(){
+        animate_abs2();
+    });
+
+    function animate_abs1(){
+        console.log('animate_abs - CALLED');
+
+        if (typeof(blockPos) === 'undefined') {
+            window.blockPos = $( ".block" ).position();
+            console.log('animate_abs - blockPos: ' + JSON.stringify(blockPos));
+        }
+
+        $(".block").animate({
+            left: String(parseInt(blockPos.left + Math.random()*50))+'px',
+            top: String(parseInt(blockPos.top + Math.random()*50))+'px'
+        }, 400, function(){
+            animate_abs1();
+        });
+    }
+
+    function animate_abs2(){
+        console.log('animate_abs - CALLED');
+
+        if (typeof(blockPos) === 'undefined') {
+            window.blockPos = $( ".block" ).position();
+            console.log('animate_abs - blockPos: ' + JSON.stringify(blockPos));
+        }
+
+        $(".block").animate({
+            left: String(parseInt(blockPos.left + Math.random()*5))+'%',
+            top: String(parseInt(100 + Math.random()*5))+'%'
+        }, 400, function(){
+            animate_abs2();
+        });
+    }
+</script>
+ 
+</body>
+</html>

@@ -267,7 +267,8 @@ function modifyUserMsgBox_removeWhenClicked(selector, removeCloseClass) {
  */  
 function UserMsgBox_mod(msg, showStandardYesNoBtns, callbackIf_yes, callbackIf_no){
     console.log('UserMsgBox_mod - CALLED');
-    var yesNoBtns = '<div><div class="btn btn-info" id="userMsgBox_yes">Prøv igen</div><div class="btn btn-info" id="userMsgBox_no">Se video</div></div>';
+    // var yesNoBtns = '<div><div class="btn btn-info" id="userMsgBox_yes">Prøv igen</div><div class="btn btn-info" id="userMsgBox_no">Se video</div></div>';
+    var yesNoBtns = '<div><div class="btn btn-info" id="userMsgBox_yes">Prøv igen</div></div>';
     UserMsgBox("body", msg+((showStandardYesNoBtns)?yesNoBtns:''));
 
     $('#UserMsgBox').unbind('click');
@@ -345,10 +346,10 @@ function anmateDnaMovement(){
         $(".basePairWrap:last").css({width: '0%'});
 
         $(".basePairWrap:last").animate({
-            width: '5%',
+            width: '5%'
             // backgroundColor: '#F00',
-            duration: 400
-        }, function(){
+            // duration: 400
+        }, 400, function(){
             
         });
 
@@ -361,9 +362,9 @@ function anmateDnaMovement(){
         $(".basePairWrap:first .templateStrand img").height(height2+'px');
 
         $(".basePairWrap:first").eq(0).animate({
-            width: '0%',
-            duration: 400
-        }, function(){
+            width: '0%'
+            // duration: 400
+        }, 400, function(){
 
             $(this).remove();      // Removes the first .basePairWrap
 
@@ -382,6 +383,9 @@ function anmateDnaMovement(){
             
         });
 
+        $(".basePairWrap:first").eq(0).css({'overflow': 'inherit'});           // <------ NEW - OK
+
+
         // movePriviousCorrectNeucleotideBackToOriginalPosition();   // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
 
         // insertCorrectDraggableClasses();  // Added 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
@@ -399,7 +403,8 @@ function anmateDnaMovement(){
 
         // UserMsgBox("body", 'Tillykke du er færdig med øvelsen! (kursist ser video af mRNA forlade cellekærnen)');
         
-        var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Prøv igen eller se en video, af messenger RNA, der forlader cellekernen.';
+        // var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3> Prøv igen eller se en video, af messenger RNA, der forlader cellekernen.';
+        var msg = '<h3>Du har løst opgaven<span class="label label-success">korrekt!</span> </h3>';
         UserMsgBox_mod(msg, true, callbackIf_yes, callbackIf_no);
 
     }
@@ -1031,7 +1036,7 @@ function makeStartOverlay() {
 
     $('#transcriptionContainer').prepend('<div id="rnaPolymerase_label" class="start_label label label-default">RNA polymerase</div>');
 
-    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-primary">START</div>');
+    $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-lg btn-primary">START</div>');
 
     ajustScreenHight();
 
@@ -1042,6 +1047,17 @@ function makeStartOverlay() {
         $('#transcriptionContainer').html(''); // Clear all content.
         main();
         $('.draggable_neucleotide').hide().fadeIn();
+    });
+
+    $(document).on('mousedown', "#transcriptionContainer", function(event) {  // #transcriptionContainer:not(#startBtn)
+        console.log('#transcriptionContainer - MOUSEDOWN');
+        $('#startBtn').addClass('vuc-primary-hover overlayPressed');
+    });
+
+
+    $(document).on('mouseup', "#transcriptionContainer", function(event) {
+        console.log('#transcriptionContainer - MOUSEUP');
+        $('#startBtn').removeClass('vuc-primary-hover overlayPressed');
     });
 }
 
