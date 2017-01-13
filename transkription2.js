@@ -35,7 +35,8 @@ var bioObj = {
 function init_dObj(){
     window.dObj = {
         duration: 1000,  // Average animation time in Brownian motion
-        length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
+        // length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
+        length: 0.03,    // Maximal length in percent relative to screen height or width in Brownian motion animation.
         wrongFeedbackTriggered: false,
         idOfWronglyMovedNeucleotide: null,
         idOfLastMovedNeucleotide: null
@@ -90,7 +91,7 @@ function brownianMotionInit(){
 // dObj.moveObjArr.push({neucleotideNo:i, x:x, y:y, brownianMotion:true, animationInfo: {x:x, y:y, angel:null, duration:null}});
 function brownianMotion3(n, duration, length){
 
-    if (!detectmob()){  // This solves the scroll-to-top problem of JQuery animate.
+    // if (!detectmob()){  // This solves the scroll-to-top problem of JQuery animate.
 
         if (dObj.moveObjArr[n].brownianMotion){
 
@@ -100,8 +101,8 @@ function brownianMotion3(n, duration, length){
             dObj.moveObjArr[n].animationInfo.duration = duration*Math.random() + 300;  // <------ Random instad?
 
             var vec = randVec(length);
-            dObj.moveObjArr[n].animationInfo.x = String(vec.x + dObj.moveObjArr[n].x)+'%';
-            dObj.moveObjArr[n].animationInfo.y = String(vec.y + dObj.moveObjArr[n].y)+'%';
+            dObj.moveObjArr[n].animationInfo.x = String(viewport_width*vec.x + viewport_width*dObj.moveObjArr[n].x*0.01);
+            dObj.moveObjArr[n].animationInfo.y = String(viewport_height*vec.y + viewport_height*dObj.moveObjArr[n].y*0.01);
             console.log('brownianMotion3 - dObj.moveObjArr[n].x: ' + dObj.moveObjArr[n].x + ', dObj.moveObjArr[n].y: '+dObj.moveObjArr[n].y);
 
             var randDeg = Math.round(180*(Math.random()-0.5));
@@ -180,7 +181,7 @@ function brownianMotion3(n, duration, length){
             //     }
             // );
         }
-    }
+    // }
 }
 
 
@@ -205,7 +206,8 @@ function giveFeedback(valid, id, callBack){
     // $('#draggable_neucleotide_'+id).css({left: dObj.xPos, top: dObj.yPos});
     console.log('giveFeedback - id: ' + id);
 
-    var HTML = 'Du skal anvende baseparringsprincippet kendt fra DNA replikation, men med den undtagelse at uracil erstatter thymin i mRNA. Dvs: cytosin (C) parres med guanin (G) og uracil (U) parres med thymin (T).';
+    // var HTML = 'Du skal anvende baseparringsprincippet kendt fra DNA replikation, men med den undtagelse at uracil erstatter thymin i mRNA. Dvs: cytosin (C) parres med guanin (G) og uracil (U) parres med thymin (T).';  // Commented out 10-01-2017
+    var HTML = 'Du skal anvende baseparringsprincippet kendt fra DNA replikation, men med den undtagelse at uracil erstatter thymin i mRNA. Dvs: cytosin (C) parres med guanin (G) og uracil (U) parres med adenin (A).';     // Added 10-01-2017
 
     UserMsgBox("body", '<h3>Du har svaret <span class="label label-danger">Forkert!</span></h3><p>'+HTML+'</p>');
 
@@ -840,11 +842,19 @@ function addDraggableNeucleotides(){
         var Tvec = randomlySpacedVec();
         var x = Tvec.x;
         var y = Tvec.y;
+
+        // if (Math.random() <= 0.5){
+        //     $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+        // } else {
+        //     y = y + 70;
+        //     $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+        // }
+
         if (Math.random() <= 0.5){
-            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: viewport_height*y*0.01, left: viewport_width*x*0.01});
         } else {
             y = y + 70;
-            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: String(y)+'%', left: String(x)+'%'});
+            $('#draggable_neucleotide_'+i).css({position: 'absolute',top: viewport_height*y*0.01, left: viewport_width*x*0.01});
         }
     
         // var width = $('#draggable_neucleotide_'+i).width();
@@ -925,9 +935,17 @@ function insertCorrectDraggableClasses(){
 }
 
 
+// function ajustScreenHight(){
+//     var width = $('#transcriptionContainer').width();
+//     $('#transcriptionContainer').height(Math.round(9/16*width));
+// }
+
+
 function ajustScreenHight(){
-    var width = $('#transcriptionContainer').width();
-    $('#transcriptionContainer').height(Math.round(9/16*width));
+    window.viewport_width = $('#transcriptionContainer').width();
+    window.viewport_height = Math.round(9/16*viewport_width);
+    console.log('ajustScreenHight - viewport_width: ' + viewport_width + ', viewport_height: ' + viewport_height);
+    $('#transcriptionContainer').height(viewport_height);
 }
 
 
