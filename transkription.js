@@ -15,7 +15,7 @@
 // var dna = 'ACTGGACTACTGGACTGACT';  // codingStrand
 
 // background-color: #454E4F == 069078079,  #454C4C == 069076076
-
+var score = 0; 
 
 var bioObj = {
         dna : { 
@@ -34,9 +34,9 @@ var bioObj = {
 
 function init_dObj(){
     window.dObj = {
-        duration: 1000,  // Average animation time in Brownian motion
+        duration: 10,  // Average animation time in Brownian motion
         // length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
-        length: 0.03,    // Maximal length in percent relative to screen height or width in Brownian motion animation.
+        length: 0.005,    // Maximal length in percent relative to screen height or width in Brownian motion animation. - Ændret ATO 21 / 7 2017  
         wrongFeedbackTriggered: false,
         idOfWronglyMovedNeucleotide: null,
         idOfLastMovedNeucleotide: null
@@ -216,11 +216,16 @@ function giveFeedback(valid, id, callBack){
 
     UserMsgBox("body", '<h3>Du har svaret <span class="label label-danger">Forkert!</span></h3><p>'+HTML+'</p>');
 
+//microhint($('#draggable_neucleotide_'+id), '<h3>Du har svaret <span class="label label-danger">Forkert!</span></h3><p>'+HTML+'</p>');
+
+
     if (!valid) {  // IMPORTANT: valid = "false" if it is the wrong draggable!
         console.log('giveFeedback - WRONG');
        
     } else {
         console.log('giveFeedback - CORRECT');
+      
+
 
     }
 
@@ -451,6 +456,10 @@ function setEventhandlers(){
                 console.log("Dropped in a valid location - SUCCESS");
                 // console.log("Dropped in a valid location - valid: " + JSON.stringify(valid));
                 // correct_sound();
+
+                  score ++;
+
+        $(".score_cont").html("Score: "+score+" / "+Math.round(dObj.dnaArr.length / 2));
 
                 // dObj.moveObjArr[id].brownianMotion = false;   // Commented out 30-11-2016: FR does not want new neucleotides anymore, only replacement of the old ones. See all places with MARK (#4#).
 
@@ -961,6 +970,13 @@ function main(){
 
     ajustScreenHight();
 
+    score =0;
+
+    
+
+
+
+
     // getAjaxData("GET", "json/quizData.json", false, "json"); 
     // console.log("jsonData: " + JSON.stringify(jsonData));
 
@@ -971,6 +987,8 @@ function main(){
     basicPosCalc();
 
     $('#transcriptionContainer').append(initTransription());
+
+    $('#transcriptionContainer').prepend("<div class='score_cont'>Score: "+score+" / "+Math.round(dObj.dnaArr.length / 2)+"</div>");
     // ajustScreenHight();
 
     addDraggableNeucleotides();
@@ -982,6 +1000,10 @@ function main(){
     getHeightOfDnaNucleotides();
 
     brownianMotionInit();   // if (!detectmob()){
+
+        
+
+
 }
 
 
@@ -1029,6 +1051,7 @@ function makeStartOverlay() {
 
     $('#transcriptionContainer').append('<div id="startBtn" class="btn btn-lg btn-primary">START</div>');
 
+
     // ajustScreenHight();
 
     getHeightOfDnaNucleotides();
@@ -1038,6 +1061,8 @@ function makeStartOverlay() {
         $('#transcriptionContainer').html(''); // Clear all content.
         main();
         $('.draggable_neucleotide').hide().fadeIn();
+
+        microhint($("#dropZone"), "Find det rigtige RNA-nukleotid og træk det hertil");
     });
 
 
@@ -1051,6 +1076,8 @@ function makeStartOverlay() {
         console.log('#transcriptionContainer - MOUSEUP');
         $('#startBtn').removeClass('vuc-primary-hover overlayPressed');
     });
+
+    microhint($("#rnaPolymerase_label"), "Orientér dig i RNA polymerasen og klik på START når du er klar til opgaven.");
 }
 
 

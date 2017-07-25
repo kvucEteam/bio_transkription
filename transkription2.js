@@ -15,7 +15,7 @@
 // var dna = 'ACTGGACTACTGGACTGACT';  // codingStrand
 
 // background-color: #454E4F == 069078079,  #454C4C == 069076076
-
+var score = 0;
 
 var bioObj = {
         dna : { 
@@ -34,9 +34,12 @@ var bioObj = {
 
 function init_dObj(){
     window.dObj = {
-        duration: 1000,  // Average animation time in Brownian motion
-        // length: 2,        // Average length in percent relative to screen height or width in Brownian motion animation.
-        length: 0.03,    // Maximal length in percent relative to screen height or width in Brownian motion animation.
+        duration: 10,  // Average animation time in Brownian motion
+        // length: 2,  
+
+              // Average length in percent relative to screen height or width in Brownian motion animation.
+        
+        length: 0.005,    // Maximal length in percent relative to screen height or width in Brownian motion animation. - Ændret ATO 21 / 7 2017  
         wrongFeedbackTriggered: false,
         idOfWronglyMovedNeucleotide: null,
         idOfLastMovedNeucleotide: null
@@ -445,6 +448,10 @@ function setEventhandlers(){
             // SEE:   http://jamesallardice.com/run-a-callback-function-when-a-jquery-ui-draggable-widget-reverts/
             if(valid) {
                 console.log("Dropped in a valid location - SUCCESS");
+
+                          score ++;
+
+        $(".score_cont").html("Score: "+score+" / "+Math.round(dObj.dnaArr.length / 2));
                 // console.log("Dropped in a valid location - valid: " + JSON.stringify(valid));
                 // correct_sound();
 
@@ -1065,6 +1072,7 @@ function makeStartOverlay() {
         $('#transcriptionContainer').html(''); // Clear all content.
         main();
         $('.draggable_neucleotide').hide().fadeIn();
+        microhint($("#dropZone"), "Find det rigtige RNA-nukleotid og træk det hertil");
     });
 
     $(document).on('mousedown', "#transcriptionContainer", function(event) {  // #transcriptionContainer:not(#startBtn)
@@ -1077,11 +1085,13 @@ function makeStartOverlay() {
         console.log('#transcriptionContainer - MOUSEUP');
         $('#startBtn').removeClass('vuc-primary-hover overlayPressed');
     });
+
+    microhint($("#rnaPolymerase_label"), "Orientér dig i RNA polymerasen og klik på START når du er klar til opgaven.");
 }
 
 
 function main(){
-
+score = 0; 
     init_dObj();
 
     // getAjaxData("GET", "json/quizData.json", false, "json"); 
@@ -1094,6 +1104,7 @@ function main(){
     basicPosCalc();
 
     $('#transcriptionContainer').append(initTransription());
+    $('#transcriptionContainer').prepend("<div class='score_cont'>Score: "+score+" / "+Math.round(dObj.dnaArr.length / 2)+"</div>");
     // ajustScreenHight();
 
     addDraggableNeucleotides();
